@@ -1,0 +1,176 @@
+<div class="container" *ngIf="checkInfo == 0 && userInfo" style="padding:100px">
+  <div class="row">
+    <div class="col-md-2 "></div>
+    <div class="col-md-8 ">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>{{userInfo.username}}
+            <span (click)="settingUser()" style="float:right">Sửa thông tin</span>
+          </h4>
+        </div>
+
+        <hr>
+        <div class="panel-body">
+
+          <div class="box box-info">
+
+            <div class="box-body">
+
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div align="center">
+
+                          <input (change)="changeImage($event)" id="profile-image-upload" class="hidden" type="file">
+                          <label for="profile-image-upload">
+                            <img [src]="imageProfile" class="img-thumbnail">click here to change profile image
+                          </label>
+                        </div>
+                        <br>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <h4 style="color:#00b1b1;">{{userInfo.firstName}} {{userInfo.middleName}} {{userInfo.lastName}} </h4>
+                      </div>
+                    </div>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr>
+                    <th scope="row">
+                      First Name
+                    </th>
+                    <td>
+                      {{userInfo.firstName}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      Middle Name
+                    </th>
+                    <td>
+                      {{userInfo.middleName}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Last Name
+                    </th>
+                    <td>
+                      {{userInfo.lastName}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Date Of Birth
+                    </th>
+                    <td>
+                      {{userInfo.birthday}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Nationality
+                    </th>
+                    <td>
+                      {{userInfo.nationality}}
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 "></div>
+  </div>
+</div>
+<div class="container" *ngIf="checkInfo == 1" style="padding:100px">
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">YOU HAVE TO CONFIRM YOUR ACCOUNT
+      <button class="btn btn-success" (click)="checkInfo = 2">click ok to continue</button>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>
+<div class="container" *ngIf="checkInfo == 2" style="padding:100px">
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+      <form>
+
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" [(ngModel)]="userInfo.username" name="username" class="form-control" disabled>
+        </div>
+
+        <div class="form-group">
+          <label for="emailConfirm">Email</label>
+          <input type="email" [(ngModel)]="email" name="email" class="form-control" id="emailConfirm">
+        </div>
+
+        <div class="form-group">
+          <label for="firstNameConfirm">First Name</label>
+          <input type="text" [(ngModel)]="firstName" name="firstName" class="form-control" id="firstNameConfirm">
+        </div>
+
+        <div class="form-group">
+          <label for="middleNameConfirm">Middle Name</label>
+          <input type="text" [(ngModel)]="middleName" name="middleName" class="form-control" id="middleNameConfirm">
+        </div>
+
+        <div class="form-group">
+          <label for="lastNameConfirm">Last Name</label>
+          <input type="text" [(ngModel)]="lastName" name="lastName" class="form-control" id="lastNameConfirm">
+        </div>
+
+        <div class="form-group">
+          <label for="birthdayConfirm">Birthday</label>
+          <input type="date" (change)="changeBirthday($event)" class="form-control" id="birthdayConfirm">
+        </div>
+
+        <div class="form-group">
+          <label for="nationalConfirm">Nationality</label>
+          <input type="text" [(ngModel)]="nationality" name="nationality" class="form-control" id="nationalConfirm">
+        </div>
+
+
+        <div class="form-group">
+          <label for="passwordConfirm">Password</label>
+          <input type="password" [(ngModel)]="password" name="password" class="form-control" id="passwordConfirm" [disabled]="!checkAllow">
+        </div>
+
+        <div class="form-group">
+          <label for="passwordConfirm2">Confirm Password</label>
+          <input type="password" [(ngModel)]="password2" name="password2" class="form-control" id="passwordConfirm2" [disabled]="!checkAllow">
+        </div>
+
+        <div class="form-group">
+          <label for="password2Confirm">Click allow change password</label>
+          <input (click)="checkAllow = !checkAllow" type="checkbox" id="password2Confirm" class="hidden">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary" (click)="updateUser()">Save</button>
+        <button type="submit" class="btn" (click)="cancel()">cancel</button>
+      </form>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="top">
+    <h1 id="title" class="hidden">
+      <span id="logo">App
+        <span>Messenger</span>
+      </span>
+      <br>
+      <span (click)="change()" style="font-size:10px">click here to regist or login</span>
+    </h1>
+
+  </div>
+  <div *ngIf="checklogin" class="login-box animated fadeInUp">
+    <div class="box-header">
+      <h2>Log In</h2>
+    </div>
+    <label for="username">Username</label>
+    <br/>
+    <input [(ngModel)]="username" type="text" id="username" (keyup.enter)="login()">
+    <br/>
+    <label for="password">Password</label>
+    <br/>
+    <input [(ngModel)]="password" type="password" id="password" (keyup.enter)="login()">
+    <br/>
+    <p *ngIf="!check" class="login-fail">Login fail</p>
+    <button (click)="login()" type="submit">Sign In</button>
+    <br/>
+    <a (click)="forgotPassword()">
+      <p class="small">Forgot your password?</p>
+    </a>
+  </div>
+
+  <div *ngIf="!checklogin" class="login-box animated fadeInUp">
+    <div class="box-header">
+      <h2>Sign Up Now</h2>
+    </div>
+    <p *ngIf="check2" style="color:blue">Registe success</p>
+    <label for="username">Username</label>
+    <br/>
+    <input [(ngModel)]="username2" type="text" id="username">
+    <br/>
+    <label for="password2">Password</label>
+    <br/>
+    <input [(ngModel)]="password2" type="password" id="password2">
+    <br/>
+    <label for="password1">Confirm Password</label>
+    <br/>
+    <input [(ngModel)]="password1" type="password" id="password1" (keyup.enter)="regist()">
+    <br/>
+    <p *ngIf="registFail" class="login-fail">{{registFail}}</p>
+    <button (click)="regist()" type="submit">Registe</button>
+    <br/>
+  </div>
+</div>
