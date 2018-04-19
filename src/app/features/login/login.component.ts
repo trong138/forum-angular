@@ -3,6 +3,8 @@ import { UserService } from '../../core/api/user.service';
 import { Router } from '@angular/router';
 import { UserModelService } from '../../core/model/user-model.service';
 import { LocalStorageService } from '../../core/util/local-storage.service';
+import { Http, RequestOptions, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +14,7 @@ import { LocalStorageService } from '../../core/util/local-storage.service';
 export class LoginComponent implements OnInit {
   name: any;
   email: any;
+  fullname: any;
   username: any;
   username2: any;
   password: any;
@@ -22,12 +25,27 @@ export class LoginComponent implements OnInit {
   private registFail;
   private check2;
   private UserLoginData;
+
+
   constructor(private UserService: UserService,
     private userModel: UserModelService,
     private storage: LocalStorageService,
-    private Router: Router) { }
+    private http: Http,
+    private Router: Router) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('authentication', `hello`);
+
+    const options = new RequestOptions({ headers: headers });
+    this.http.post(
+      "http://localhost:8080/api/auth",
+      { username: 'trongnguyen', password: '123456' },
+      options
+    ).subscribe();
+  }
   ngOnInit() {
-    this.checkLogin();
+    // this.checkLogin(); 
+    // this.login();
   }
 
   checkLogin() {
@@ -47,29 +65,34 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.Router.navigate(['/features', {
-      // iduser: this.userModel.getCookieUserInfo().id,
-    }], );
-    // var params = {
-    //   username: this.username,
-    //   password: this.password
-    // }
-    // this.UserService.login(params).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     this.userModel.setCookieUserInfo(data);
-    //     this.Router.navigate(['/features', {
-    //       iduser: this.userModel.getCookieUserInfo().id,
-    //     }], );
-    //   },
-    //   error => {
-    //     this.check = false;
-    //     console.log(error);
-    //   }
-    // );
+    // this.Router.navigate(['/features', {
+    //   // iduser: this.userModel.getCookieUserInfo().id,
+    // }], );
+
+    var params = {
+      username: this.username,
+      password: this.password
+    }
+
+    console.log(params);
+    this.UserService.login(params).subscribe(
+      data => {
+        console.log(data);
+        this.userModel.setCookieUserInfo(data);
+        this.Router.navigate(['/features/home', {
+          iduser: this.userModel.getCookieUserInfo().id,
+        }], );
+      },
+      error => {
+        this.check = false;
+        console.log(error);
+      }
+    );
   }
 
   resetRegist() {
+    this.email = "";
+    this.fullname = "";
     this.username2 = "";
     this.password1 = "";
     this.password2 = "";
@@ -80,11 +103,14 @@ export class LoginComponent implements OnInit {
       if (this.password2 == this.password1) {
         var params = {
           username: this.username2,
-          password: this.password2
+          password: this.password1,
+          repassword: this.password2,
+          fullname: this.fullname,
+          email: this.email
         };
         this.UserService.regist(params).subscribe(
           data => {
-            if (data.success) {
+            if (data) {
               console.log("regist", data);
               this.resetRegist();
               this.registFail = "";

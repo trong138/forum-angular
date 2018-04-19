@@ -23,6 +23,8 @@ export const featureRoutes: Routes = [
             { path: 'detail-post', loadChildren: './detail-post/detail-post.module#DetailPostModule' },
             { path: 'top-follow', loadChildren: './top-follow/top-follow.module#TopFollowModule' },
             { path: 'user-info', loadChildren: './user-info/user-info.module#UserInfoModule' },
+            { path: 'your-question', loadChildren: './your-question/your-question.module#YourQuestionModule' },
+            { path: 'create-edit-question', loadChildren: './create-edit-question/create-edit-question.module#CreateEditQuestionModule' },
         ]
     }, {
         path: '**',

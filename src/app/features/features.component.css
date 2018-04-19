@@ -8,3 +8,6 @@ body {
     }
   }
   
+  .container-fluid{
+    padding-top: 74px;
+  }

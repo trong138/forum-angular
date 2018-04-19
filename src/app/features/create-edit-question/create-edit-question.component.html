@@ -1,0 +1,29 @@
+<div class="form-build">
+  <h1 *ngIf="type_page == 'create'">Create Question</h1>
+  <h1 *ngIf="type_page == 'edit'">Edit Question</h1>
+  <br>
+  <form>
+    <div class="form-group">
+      <label for="tittle-create">Tittle</label>
+      <input [(ngModel)]="tittle" name="tittle" type="email" class="form-control" id="tittle-create" aria-describedby="emailHelp"
+        placeholder="Tittle">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleSelect1">Category</label>
+      <select [(ngModel)]="id_category" name="category" class="form-control" id="exampleSelect1">
+        <option *ngFor="let item of listCategories" [value]='item.name'>{{item.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleTextarea">Content</label>
+      <textarea [(ngModel)]="content" name="content" class="form-control" id="exampleTextarea" rows="5"></textarea>
+    </div>
+    <!-- <div class="form-group">
+      <label for="exampleInputFile">File input</label>
+      <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+      <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+    </div> -->
+    <button type="submit" (click)="submit()" class="btn btn-primary">Submit</button>
+  </form>
+</div>

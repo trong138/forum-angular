@@ -1,0 +1,423 @@
+/*-----------------
+  Google font
+------------------*/
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
+
+/*-------------------
+  Theme Default CSS
+--------------------*/
+
+a {
+    text-decoration: none;
+    outline: none;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    color: #333333;
+}
+
+input:focus,
+button:focus,
+a:focus,
+a:hover {
+    text-decoration: none;
+    outline: none;
+    color: #000000;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+html, body {
+    height: 100%
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #515656;
+}
+
+
+/* Remove Chrome Input Field's Unwanted Yellow Background Color */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+/**
+*Helper-Classes
+**/
+
+.full-height {
+    width: 100%;
+    height: 100vh;
+}
+
+.relative {
+    position: relative;
+}
+
+.fixed, .absolute {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.text-center {
+    margin: auto;
+}
+
+.v-center {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap
+}
+
+.section-padding {
+    padding: 120px 0;
+}
+
+.social-menu {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+}
+
+.social-menu li {
+    display: inline-block;
+    margin: 0 3px;
+}
+
+.social-menu li a {
+    display: block;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    line-height: 2.5em;
+    background-color: #ffffff;
+    color: #138fc2;
+    border-radius: 100px;
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+}
+
+.social-menu li a:hover {
+    background-color: #138fc2;
+    color: #ffffff;
+    -webkit-box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+/**
+*Default Background Class
+**/
+
+.overlay:before,
+.sky-bg {
+    background: #75cbe7;
+    background: -webkit-gradient(linear, left top, left bottom, from(#75cbe7), to(#138fc2));
+    background: linear-gradient(to bottom, #75cbe7 0%, #138fc2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#75cbe7', endColorstr='#138fc2', GradientType=0);
+    color: #ffffff;
+}
+
+.gray-bg {
+    background-color: #f2fefe;
+}
+
+/**
+*Default Button
+**/
+
+.button {
+    display: inline-block;
+    padding: 8px 30px;
+    border-radius: 50px;
+    color: #ffffff;
+    background-color: #2f60c3;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    border: none;
+    -webkit-box-shadow: 2px 5px 20px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 5px 20px -5px rgba(0, 0, 0, 0.1);
+}
+
+.button.white,
+.button:hover {
+    background-color: #ffffff;
+    color: #138fc2;
+}
+
+.button.white:hover {
+    background-color: #2f60c3;
+    color: #ffffff;
+}
+
+.button i {
+    margin-left: 5px;
+}
+
+/**
+*Page title
+**/
+
+.page-title {
+    margin-bottom: 60px;
+}
+
+.page-title h2 {
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.page-title h2:after {
+    content: "\e675";
+    font-family: 'themify';
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 15px;
+    height: 15px;
+    font-size: 14px;
+}
+
+/**
+*Box-style
+**/
+
+.box {
+    padding: 50px 30px;
+    text-align: center;
+    -webkit-box-shadow: 0 0 0 0 #ffffff;
+    box-shadow: 0 0 0 0 #ffffff;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    border-radius: 5px;
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+}
+
+.box:hover {
+    -webkit-box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px)
+}
+
+.box h4 {
+    text-transform: uppercase;
+}
+
+.box .box-icon {
+    height: 160px;
+    margin-bottom: 20px;
+}
+
+.box .box-icon img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.box:hover .box-icon img {
+    -webkit-filter: grayscale(0);
+    filter: grayscale(0)
+}
+
+/**
+*Mainmenu-area
+**/
+
+.mainmenu-area {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 9999999;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.overlay,
+.overlay a,
+.mainmenu-area a {
+    color: #ffffff;
+}
+
+#collapsibleNavbar {
+    font-size: 18px;
+}
+
+
+/**
+*Header-area
+**/
+
+.anlge-bg {
+    background: url('../images/angle-bg.png') no-repeat scroll center bottom -120px / 100% auto;
+}
+
+.overlay {
+    position: relative;
+}
+
+.overlay:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8
+}
+
+.header-text h2 {
+    margin-bottom: 20px;
+    font-size: 40px;
+}
+
+.header-text .button {
+    margin-top: 30px;
+}
+
+
+/***
+*Team-Section
+***/
+
+.gold-member {
+    background-color: #ffffff;
+    border-radius: 5px;
+    overflow: hidden;
+    color: #515656;
+    text-align: center;
+    position: relative;
+    -webkit-box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.3);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition: 0.3s;
+    transition: 0.3s
+}
+
+.gold-member:hover {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px)
+}
+
+.gold-member .member-photo {
+    margin-bottom: 20px;
+    padding-top: 20px;
+    overflow: hidden;
+}
+
+.gold-member .member-photo img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.gold-member:hover .member-photo img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1)
+}
+
+.gold-member h4 {
+    text-transform: uppercase;
+}
+
+.gold-member h6 {
+    margin-bottom: 20px;
+}
+
+
+/***
+*Team-Page
+***/
+
+.team-area {
+    position: relative;
+    color: #ffffff;
+}
+
+.team-area:before {
+    opacity: 0.9
+}
+
+.team {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.team .team-photo {
+    margin-bottom: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    -webkit-box-shadow: 5px 10px 30px -10px rgba(255, 255, 255, 0.5);
+    box-shadow: 5px 10px 30px -10px rgba(255, 255, 255, 0.5);
+    position: relative;
+}
+
+.team .team-photo:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+}
+
+
+/***
+*Footer-area
+***/
+
+.footer-area {
+    padding-top: 120px;
+    z-index: 1;
+}
+
+.footer-middle {
+    margin-bottom: 60px;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 25px;
+    padding-bottom: 15px;
+}

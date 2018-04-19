@@ -13,20 +13,16 @@ export class UserService {
     private ConfigService: ConfigService) { }
 
   public login(params: object): Observable<any> {
-    return this.appApi.post('api/login', params);
+    return this.appApi.post('api/auth', params);
   }
 
   public regist(params: object): Observable<any> {
 
-    return this.appApi.post('api/register', params);
+    return this.appApi.post('api/users', params);
   }
 
   public getInfoUser(id): Observable<any> {
-    var params = {
-      id: id
-    }
-    params['token'] = this.UserModelService.usSession().accesskey;
-    return this.appApi.post('api/user/get', params);
+    return this.appApi.post('api/users/' + id, null);
   }
   public getListUser(): Observable<any> {
     var params = {}

@@ -13,17 +13,11 @@ import { ConfigService } from '../../../core/config.service';
 export class HeaderAppComponent implements OnInit {
   listTitle = [
     { name: 'Home', value: 0 },
-    { name: 'Tags', value: 1 },
-    {
-      name: [{
-        name: 'Setting', value: 0,
-      }, {
-        name: 'Profile', value: 1,
-      }, {
-        name: 'Logout', value: 2,
-      }
-      ], value: 2
-    },
+    { name: 'Question', value: 1 },
+    { name: 'Category', value: 2 },
+    { name: 'Gold Member', value: 3 },
+    { name: 'Team', value: 4 },
+    { name: 'Me', value: 5 },
   ];
   private userInfo;
   private imageProfile;
@@ -38,6 +32,17 @@ export class HeaderAppComponent implements OnInit {
     // this.getUserInfo(this.userModal.getCookieUserInfo().id);
   }
 
+  changePage(id) {
+
+    if (id == 0) this.goToHome();
+    else if (id == 1) this.goToCategories();
+    else if (id == 3) this.goToTopFollow();
+
+    else if (id == 4) this.goToSetting();
+    else if (id == 5) this.goToInfo();
+    // else if (id == 2) this.goToLogin();
+
+  }
 
   getUserInfo(id) {
     this.UserService.getInfoUser(id).subscribe(data => {
@@ -57,26 +62,20 @@ export class HeaderAppComponent implements OnInit {
 
   goToHome() {
     this.Router.navigate(['/features/home', {
-      // iduser: this.userModal.getCookieUserInfo().id,
+      iduser: this.userModal.getCookieUserInfo().id,
     }]);
   }
 
   goToInfo() {
     this.Router.navigate(['/features/user-info', {
-      // iduser: this.userModal.getCookieUserInfo().id,
+      iduser: this.userModal.getCookieUserInfo().id,
     }]);
   }
 
-  selectTitle(type, value) {
-    if (type == 'list') {
-      if (value == 0) this.goToHome();
-      else if (value == 1) this.goToCategories();
-
-    } else if (type == 'dropdown') {
-      if (value == 0) this.goToSetting();
-      else if (value == 1) this.goToInfo();
-      else if (value == 2) this.goToLogin();
-    }
+  goToTopFollow() {
+    this.Router.navigate(['/features/top-follow', {
+      iduser: this.userModal.getCookieUserInfo().id,
+    }]);
   }
 
   goToSetting() {
@@ -91,7 +90,8 @@ export class HeaderAppComponent implements OnInit {
   goToCategories() {
 
     this.Router.navigate(['/features/categories', {
-      // iduser: this.userModal.getCookieUserInfo().id,
+      iduser: this.userModal.getCookieUserInfo().id,
     }]);
   }
+
 }

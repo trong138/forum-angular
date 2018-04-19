@@ -1,0 +1,49 @@
+<!-- Search Widget -->
+<div class="card my-4">
+  <h5 class="card-header">Search</h5>
+  <div class="card-body">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button">Go!</button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Categories Widget -->
+<div class="card my-4">
+  <h5 class="card-header">Categories</h5>
+  <div class="card-body">
+    <div>
+      <table class="table">
+        <tbody>
+          <tr *ngFor="let item of listCategories" (click)="emitParams(item.name,1)">
+            <td>{{item.name}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Side Widget -->
+<div class="card my-4">
+  <h5 class="card-header">Content</h5>
+  <div class="card-body">
+
+    <table class="table">
+      <tbody>
+        <tr (click)="goToYourQuestion()">
+          <td>your questions </td>
+        </tr>
+        <tr (click)="emitParams('not-answer',2)">
+          <td>questions not answer</td>
+        </tr>
+        <tr (click)="goToCreateQuestion()">
+          <td>create question</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -4,6 +4,8 @@ import { ConfigService } from './config.service';
 import { ApiModule } from './api/api.module';
 import { UtilModule } from './util/util.module';
 import { UserModelService } from './model/user-model.service';
+import { CategoriesService } from './api/categories.service';
+import { QuestionsService } from './api/questions.service';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { UserModelService } from './model/user-model.service';
   declarations: [],
   providers : [
     ConfigService,
-    UserModelService
+    UserModelService,
+    CategoriesService,
+    QuestionsService
   ]
 })
 export class CoreModule { }

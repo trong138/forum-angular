@@ -26,16 +26,16 @@ export class HttpService {
     return this.jsonpRequest.get(fullUrl);
   }
 
-  public post(url: string, params: any, options?: RequestOptionsArgs): Observable<any> {
+  public post(url: string, params: any, token?: any): Observable<any> {
     return this.http.post(
       this.getFullUrl(url),
-      this.serializeData(params),
-      this.requestOptions(options)
+      params,
+      this.requestOptions(token)
     );
   }
 
   public uploadBlob(url: string, params: FormData, options?: RequestOptionsArgs): Observable<any> {
-    console.log("uploadBlob2",params)
+    console.log("uploadBlob2", params)
     return this.http.post(
       this.getFullUrl(url),
       params
@@ -83,15 +83,14 @@ export class HttpService {
 
 
 
-  private requestOptions(options?: RequestOptionsArgs): RequestOptionsArgs {
-    if (options == null) {
-      options = new RequestOptions();
+  private requestOptions(token?): RequestOptionsArgs {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json; charset=utf-8');
+    if (token) {
+      console.log("Authorization", token);
+      headers.append('Authorization', token);
     }
-    if (options.headers == null) {
-      options.headers = new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-      });
-    }
-    return options;
+    return new RequestOptions({ headers: headers });
   }
 }
+

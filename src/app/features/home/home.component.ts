@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserModelService } from '../../core/model/user-model.service';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  private checkShowLogin = true;
+  constructor(private Router: Router,
+    private userModal: UserModelService) { }
 
   ngOnInit() {
+    if (this.userModal.getCookieUserInfo()) {
+      this.checkShowLogin = false;
+    }
   }
 
+  goToLogin() {
+    this.Router.navigate(['/login', {}]);
+  }
 }

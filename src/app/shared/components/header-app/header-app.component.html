@@ -33,31 +33,47 @@
   </div>
 </nav> -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
   <div class="collapse navbar-collapse" id="navbarText" style="margin-right: 110px;margin-left: 110px;">
     <ul class="navbar-nav ml-auto" style="padding-right:20px" *ngIf="listTitle">
       <li class="nav-item active" *ngFor="let item of listTitle">
-        <a *ngIf="item.value != 2" class="nav-link" (click)="selectTitle('list',item.value)">{{item.name}} </a>
+        <a *ngIf="item.value != 3" class="nav-link" (click)="selectTitle('list',item.value)">{{item.name}} </a>
       </li>
       <li class="nav-item active" (click)="goToInfo()" *ngIf="userInfo">
         {{userInfo.username}}
       </li>
     </ul>
     <div class="dropdown">
-      <!-- <img data-toggle="dropdown" style="height: 40px;" [src]="imageProfile" class="rounded-circle"> -->
       <img data-toggle="dropdown" src="../../../../assets/image/hot.jpg" class="rounded-circle" style="height: 40px;" alt="">
-      <!-- <button type="button" style="
-      background: none;
-      color: white;" class="btn dropdown-toggle" data-toggle="dropdown">
-        <span class="oi oi-caret-bottom"></span>
-      </button> -->
+      
       <div class="dropdown-menu">
-        <a class="dropdown-item" (click)="selectTitle('dropdown',list.value)" *ngFor="let list of listTitle[2].name">
+        <a class="dropdown-item" (click)="selectTitle('dropdown',list.value)" *ngFor="let list of listTitle[3].name">
           <hr *ngIf="list.value == 2 ">{{list.name}}
         </a>
 
       </div>
     </div>
   </div>
-</nav>
+</nav> -->
+
+<div class="mainmenu-area" data-spy="affix" data-offset-top="100">
+  <div class="container">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top" id="primary-menu">
+      <a class="navbar-brand" href="#">
+        <h2>BK ASK FORUM</h2>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item" (click)="changePage(item.value)" *ngFor="let item of listTitle">
+            <a class="nav-link">{{item.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+  </div>
+</div>

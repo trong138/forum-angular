@@ -26,8 +26,6 @@ export class AppAPIService {
 
     return this.nextLayer.post(url, params, options)
       .map(response => {
-        console.log("-----------", response);
-
         if (response) {
           return response;
         } else {

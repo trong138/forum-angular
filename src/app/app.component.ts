@@ -13,7 +13,7 @@ export class AppComponent {
     private userModel: UserModelService,
   ) {
     // this.checkLogin();
-    this.Router.navigate(['/login']);
+    // this.Router.navigate(['/login']);
   }
 
   private checkLogin() {

@@ -1,5 +1,5 @@
 import { DetailPostComponent } from "./detail-post.component";
 
-export const detaiPostRouter = [{
+export const detailPostRoute = [{
     path: '', component: DetailPostComponent
 }]
