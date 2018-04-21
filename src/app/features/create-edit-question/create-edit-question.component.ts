@@ -12,27 +12,34 @@ export class CreateEditQuestionComponent implements OnInit {
   private listCategories = [];
   private tittle;
   private type_page = 'create';
-  private id_category = 1;
+  private category = 1;
+  private id_question;
   private content;
   constructor(private categories: CategoriesService,
     private Router: Router,
     private route: ActivatedRoute,
     private question: QuestionsService) {
     this.route.params
-      .map(params => params['type'])
-      .subscribe((data) => {
-        if (data) {
-          console.log("type_page", data);
-          this.type_page = data;
-          if (data == 'edit') {
-            this.takeData();
-          }
+      .map(params => params['id'])
+      .subscribe((id) => {
+        if (id) {
+          this.id_question = id;
+          this.type_page = 'edit';
+          this.getQuestion(id);
         }
       });
   }
 
   ngOnInit() {
     this.getListCategories();
+  }
+
+  getQuestion(id) {
+    this.question.detail(id).subscribe(data => {
+      console.log('getQuestion', data);
+    }, err => {
+      console.log('getQuestion', err);
+    })
   }
 
   getListCategories() {
@@ -56,12 +63,12 @@ export class CreateEditQuestionComponent implements OnInit {
     var params = {
       title: this.tittle,
       content: this.content,
-      category: this.id_category
+      category: this.category
     }
     console.log('create', params);
     this.question.create(params).subscribe(data => {
       console.log("create-question", data);
-      this.Router.navigate(['/features/your-question', {
+      this.Router.navigate(['/features/categories', {
         // iduser: this.userModel.getCookieUserInfo().id,
       }]);
     }, err => {
@@ -75,6 +82,19 @@ export class CreateEditQuestionComponent implements OnInit {
   }
 
   editQuestion() {
+    var params = {
+      title: this.tittle,
+      content: this.content,
+      category: this.category
+    }
+    this.question.edit(params, this.id_question).subscribe(data => {
 
+    }, err => {
+
+    })
+  }
+
+  cancal() {
+    window.history.back();
   }
 }

@@ -11,6 +11,22 @@
   </div>
 </div>
 
+<div class="card my-4">
+  <h5 class="card-header">Content</h5>
+  <div class="card-body">
+
+    <table class="table">
+      <tbody>
+        <tr *ngIf="id_user" (click)="emitParams('you-follow',2)">
+          <td>questions you follow</td>
+        </tr>
+        <tr (click)="emitParams('not-answer',2)">
+          <td>questions not answer</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 <!-- Categories Widget -->
 <div class="card my-4">
   <h5 class="card-header">Categories</h5>
@@ -28,22 +44,3 @@
 </div>
 
 <!-- Side Widget -->
-<div class="card my-4">
-  <h5 class="card-header">Content</h5>
-  <div class="card-body">
-
-    <table class="table">
-      <tbody>
-        <tr (click)="goToYourQuestion()">
-          <td>your questions </td>
-        </tr>
-        <tr (click)="emitParams('not-answer',2)">
-          <td>questions not answer</td>
-        </tr>
-        <tr (click)="goToCreateQuestion()">
-          <td>create question</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>

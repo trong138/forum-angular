@@ -1,3 +1,23 @@
-<p>
-  management works!
-</p>
+<nav class="navbar navbar-expand-md bg-secondary navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" style="color: white">Management</a>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav ml-auto">
+      <li *ngFor="let item of listTitle" (click)="userFunction(item.value)" class="nav-item">
+        <a class="nav-link">{{item.name}}</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <app-category *ngIf="listTitle[0].select"></app-category>
+    <app-question *ngIf="listTitle[1].select"></app-question>
+    <app-user *ngIf="listTitle[2].select"></app-user>
+    <app-profile *ngIf="listTitle[3].select"></app-profile>
+  </div>
+</div>

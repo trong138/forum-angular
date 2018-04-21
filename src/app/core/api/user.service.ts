@@ -24,34 +24,26 @@ export class UserService {
   public getInfoUser(id): Observable<any> {
     return this.appApi.post('api/users/' + id, null);
   }
-  public getListUser(): Observable<any> {
-    var params = {}
-    params['token'] = this.UserModelService.usSession().accesskey;
-    return this.appApi.post('api/user/list', params);
-  }
-
-  public searchListUser(params): Observable<any> {
-    params['token'] = this.UserModelService.usSession().accesskey;
-    return this.appApi.post('api/user/search_name', params);
-  }
 
   public updateUser(params): Observable<any> {
-    params['token'] = this.UserModelService.usSession().accesskey;
-    return this.appApi.post('api/user/update', params);
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/changePass', params, token);
   }
 
-  public upload_image(file, params): Observable<any> {
-    params = params || {};
-    params['token'] = this.UserModelService.usSession().accesskey;
-    params.file = file;
-    console.log("upload_image", params);
-    return this.appApi.uploadBlob('api/user/upload_profile', file, params);
+  public getListUserFollow(params): Observable<any> {
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/follow/paginated', params, token);
   }
 
-  public getImageProfile(username: String) {
-    var url = this.ConfigService.getBaseURL();
-    var a = new Date();
-    return url + 'api/user/get_profile/' + username + "?token=" + this.UserModelService.usSession().accesskey + "&time=" + a.getTime();
-    // return ;
+  public follow(id): Observable<any> {
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/' + id + 'follow', null, token);
   }
+
+  public unfollow(id): Observable<any> {
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/' + id + 'unfollow', null, token);
+  }
+
+
 }

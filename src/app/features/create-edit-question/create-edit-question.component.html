@@ -1,5 +1,5 @@
 <div class="form-build">
-  <h1 *ngIf="type_page == 'create'">Create Question</h1>
+  <h1 *ngIf="type_page == 'create'">{{type_page}} Question</h1>
   <h1 *ngIf="type_page == 'edit'">Edit Question</h1>
   <br>
   <form>
@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
       <label for="exampleSelect1">Category</label>
-      <select [(ngModel)]="id_category" name="category" class="form-control" id="exampleSelect1">
+      <select [(ngModel)]="category" name="category" class="form-control" id="exampleSelect1">
         <option *ngFor="let item of listCategories" [value]='item.name'>{{item.name}}</option>
       </select>
     </div>
@@ -24,6 +24,32 @@
       <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
       <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
     </div> -->
-    <button type="submit" (click)="submit()" class="btn btn-primary">Submit</button>
+    <button data-toggle="modal" data-target="#myModalCreateEdit" class="btn btn-primary">Submit</button>
+    <button (click)="cancal()" class="btn btn-basic">Cancel</button>
   </form>
+</div>
+
+<div class="modal fade" style="padding-top: 200px" id="myModalCreateEdit">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure?</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        loading.............
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" (click)="submit()" class="btn btn-primary" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
 </div>

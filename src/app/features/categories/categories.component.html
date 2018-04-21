@@ -9,15 +9,17 @@
     <div class="col-md-8">
 
       <h1 class="my-4">{{title}}
+        <h2 style="float: right;" class="btn btn-primary" (click)="goToCreateQuestion()">+ Add question</h2>
       </h1>
 
       <!-- Blog Post -->
       <div class="card mb-4" *ngFor="let item of listPost">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+        <!-- <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap"> -->
         <div class="card-body">
           <h2 class="card-title">{{item.title}}</h2>
           <p class="card-text">{{item.content}}</p>
-          <!-- <a (click)="goToDetail(item.id)" class="btn btn-danger">Delete</a> -->
+          <a *ngIf="id_user == item.userId" (click)="edit(item.id)" class="btn btn-success">Edit</a>
+          <a *ngIf="id_user == item.userId" (click)="delete(item.id)" class="btn btn-danger">Delete</a>
           <a (click)="goToDetail(item.id)" class="btn btn-primary">Read More &rarr;</a>
         </div>
         <div class="card-footer text-muted">
@@ -48,14 +50,25 @@
 </div>
 <!-- /.container -->
 
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-  </div>
-  <!-- /.container -->
-</footer>
+<button type="button" [hidden]="true" id="modal-add-question" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+</button>
 
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- The Modal -->
+<div class="modal fade" id="myModal" style="padding-top: 200px">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">you have to login for function</h4>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" (click)="goToLogin()" class="btn btn-primary" data-dismiss="modal">OK Fine</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>

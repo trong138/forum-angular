@@ -32,16 +32,7 @@ export class LoginComponent implements OnInit {
     private storage: LocalStorageService,
     private http: Http,
     private Router: Router) {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('authentication', `hello`);
-
-    const options = new RequestOptions({ headers: headers });
-    this.http.post(
-      "http://localhost:8080/api/auth",
-      { username: 'trongnguyen', password: '123456' },
-      options
-    ).subscribe();
+    this.storage.removeAll();
   }
   ngOnInit() {
     // this.checkLogin(); 
@@ -68,7 +59,7 @@ export class LoginComponent implements OnInit {
     // this.Router.navigate(['/features', {
     //   // iduser: this.userModel.getCookieUserInfo().id,
     // }], );
-
+    this.check2 = false;
     var params = {
       username: this.username,
       password: this.password
@@ -80,7 +71,7 @@ export class LoginComponent implements OnInit {
         console.log(data);
         this.userModel.setCookieUserInfo(data);
         this.Router.navigate(['/features/home', {
-          iduser: this.userModel.getCookieUserInfo().id,
+          // iduser: this.userModel.getCookieUserInfo().id,
         }], );
       },
       error => {
@@ -115,6 +106,7 @@ export class LoginComponent implements OnInit {
               this.resetRegist();
               this.registFail = "";
               this.check2 = true;
+              this.checklogin = !this.checklogin;
             } else {
               this.registFail = data.message;
               this.check2 = false;
@@ -141,7 +133,11 @@ export class LoginComponent implements OnInit {
   }
 
   forgotPassword() {
-
   }
 
+  skip() {
+    this.Router.navigate(['/features/home', {
+      // iduser: this.userModel.getCookieUserInfo().id,
+    }], );
+  }
 }

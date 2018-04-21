@@ -11,11 +11,16 @@ import { UserModelService } from '../../../core/model/user-model.service';
 export class ListSelectComponent implements OnInit {
   @Output('emitParams') emit_params = new EventEmitter();
   private listCategories = [];
+  id_user;
   constructor(private categories: CategoriesService,
     private Router: Router,
     private userModal: UserModelService) { }
 
   ngOnInit() {
+    if (this.userModal.getCookieUserInfo()) {
+      this.id_user = this.userModal.getCookieUserInfo().id;
+      console.log("id_user", this.id_user);
+    }
     this.getListCategories();
   }
 
@@ -29,21 +34,16 @@ export class ListSelectComponent implements OnInit {
   }
 
   emitParams(text, type) {
+
     this.emit_params.emit({
       text: text,
       type: type
     })
   }
 
-  goToYourQuestion() {
-    this.Router.navigate(['/features/your-question', {
-      iduser: this.userModal.getCookieUserInfo().id,
-    }]);
-  }
-
-  goToCreateQuestion() {
-    this.Router.navigate(['/features/create-edit-question', {
-      iduser: this.userModal.getCookieUserInfo().id,
+  goToPageQuestion() {
+    this.Router.navigate(['/features/categories', {
+      // iduser: this.userModal.getCookieUserInfo().id,
     }]);
   }
 }
