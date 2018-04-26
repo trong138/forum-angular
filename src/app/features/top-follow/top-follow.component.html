@@ -1,9 +1,23 @@
-<div class="container" *ngIf="id_user">
+<div class="container" *ngIf="listTopUser">
   <div class="row">
     <div class="col-lg-12">
-      <h2 class="my-4">User follow</h2>
+      <h1 class="my-4">Top User</h1>
     </div>
-    <div class="col-lg-3 col-sm-6 text-center mb-3" *ngFor="let user of listUserFollow">
+    <div (click)="userInfo(user.id)" class="col-lg-3 col-sm-6 text-center mb-3" *ngFor="let user of listTopUser">
+      <img class="rounded-circle img-fluid d-block img-follow" [src]="user.avatar" alt="">
+      <h3>{{user.fullname}}
+        <!-- <small>Job Title</small> -->
+      </h3>
+      <p>{{user.username}}</p>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="id_user && listUserFollow">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="my-4">User follow</h1>
+    </div>
+    <div (click)="userInfo(user.id)" class="col-lg-3 col-sm-6 text-center mb-3" *ngFor="let user of listUserFollow">
       <img class="rounded-circle img-fluid d-block img-follow" [src]="user.avatar" alt="">
       <h3>{{user.fullname}}
         <!-- <small>Job Title</small> -->

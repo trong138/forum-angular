@@ -87,7 +87,6 @@ export class HttpService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json; charset=utf-8');
     if (token) {
-      console.log("Authorization", token);
       headers.append('Authorization', token);
     }
     return new RequestOptions({ headers: headers });

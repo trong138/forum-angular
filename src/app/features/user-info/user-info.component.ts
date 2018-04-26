@@ -19,6 +19,7 @@ export class UserInfoComponent implements OnInit {
   private listPost = [];
   private imageProfile;
   private check_member;
+  private check_follow = false;
   constructor(private route: ActivatedRoute,
     private UserSevice: UserService,
     private UserModelService: UserModelService,
@@ -37,9 +38,19 @@ export class UserInfoComponent implements OnInit {
           this.check_member = false;
         }
         this.getUserInfo(id);
+        this.checkFollow(id);
         this.getListQuestion();
-
       });
+  }
+
+  checkFollow(id) {
+    this.user.checkFollow(id).subscribe(data => {
+      console.log("check-follow", data);
+      this.check_follow = true;
+    }, err => {
+      this.check_follow = false;
+      console.log("check-follow", err);
+    })
   }
 
   getUserInfo(id) {
@@ -177,6 +188,7 @@ export class UserInfoComponent implements OnInit {
   follow() {
     this.user.follow(this.id_user).subscribe(data => {
       console.log("follow", data);
+      this.checkFollow(this.id_user);
     }, err => {
       console.log("follow", err);
     })
@@ -185,6 +197,7 @@ export class UserInfoComponent implements OnInit {
   unfollow() {
     this.question.unfollow(this.id_user).subscribe(data => {
       console.log("unfollow", data);
+      this.checkFollow(this.id_user);
     }, err => {
       console.log("unfollow", err);
     })

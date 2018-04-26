@@ -12,7 +12,7 @@ export class CreateEditQuestionComponent implements OnInit {
   private listCategories = [];
   private tittle;
   private type_page = 'create';
-  private category = 1;
+  private category;
   private id_question;
   private content;
   constructor(private categories: CategoriesService,
@@ -36,6 +36,9 @@ export class CreateEditQuestionComponent implements OnInit {
 
   getQuestion(id) {
     this.question.detail(id).subscribe(data => {
+      this.tittle = data.title;
+      this.content = data.content;
+      this.category = data.categoryName;
       console.log('getQuestion', data);
     }, err => {
       console.log('getQuestion', err);
@@ -88,7 +91,10 @@ export class CreateEditQuestionComponent implements OnInit {
       category: this.category
     }
     this.question.edit(params, this.id_question).subscribe(data => {
-
+      console.log("edit-question", data);
+      this.Router.navigate(['/features/categories', {
+        // iduser: this.userModel.getCookieUserInfo().id,
+      }]);
     }, err => {
 
     })

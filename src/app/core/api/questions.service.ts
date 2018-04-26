@@ -32,6 +32,11 @@ export class QuestionsService {
         return this.appApi.post('api/questions/answer/paginated', params);
     }
 
+    public search(params): Observable<any> {
+        // var token = this.UserModelService.usSession().token;
+        return this.appApi.post('api/questions/search', params);
+    }
+
     public getFollow(params): Observable<any> {
         var token = this.UserModelService.usSession().token;
         return this.appApi.post('api/questions/follow/paginated', params, token);
@@ -57,6 +62,21 @@ export class QuestionsService {
         return this.appApi.post('api/questions/' + id + '/update', params, token);
     }
 
+    public vote(id): Observable<any> {
+        var token = this.UserModelService.usSession().token;
+        return this.appApi.post('api/questions/' + id + '/vote', null, token);
+    }
+
+    public unvote(id): Observable<any> {
+        var token = this.UserModelService.usSession().token;
+        return this.appApi.post('api/questions/' + id + '/unvote', null, token);
+    }
+
+    public checkFollow(id): Observable<any> {
+        var token = this.UserModelService.usSession().token;
+        return this.appApi.post('api/questions/' + id + '/checkFollow', null, token);
+    }
+
     public follow(id): Observable<any> {
         var token = this.UserModelService.usSession().token;
         return this.appApi.post('api/questions/' + id + '/follow', null, token);
@@ -64,6 +84,6 @@ export class QuestionsService {
 
     public unfollow(id): Observable<any> {
         var token = this.UserModelService.usSession().token;
-        return this.appApi.post('api/questions/' + id + '/follow', null, token);
+        return this.appApi.post('api/questions/' + id + '/unfollow', null, token);
     }
 }

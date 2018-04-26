@@ -10,6 +10,7 @@ import { UserModelService } from '../../../core/model/user-model.service';
 })
 export class ListSelectComponent implements OnInit {
   @Output('emitParams') emit_params = new EventEmitter();
+  @Output('search') Search = new EventEmitter();
   private listCategories = [];
   id_user;
   constructor(private categories: CategoriesService,
@@ -39,6 +40,10 @@ export class ListSelectComponent implements OnInit {
       text: text,
       type: type
     })
+  }
+
+  search(key) {
+    this.Search.emit(key.target.value);
   }
 
   goToPageQuestion() {

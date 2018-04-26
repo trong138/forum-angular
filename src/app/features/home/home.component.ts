@@ -21,4 +21,16 @@ export class HomeComponent implements OnInit {
   goToLogin() {
     this.Router.navigate(['/login', {}]);
   }
+
+  goToCategory() {
+    this.Router.navigate(['/features/categories', {
+      // iduser: id
+    }]);
+  }
+
+  goToTopUser() {
+    this.Router.navigate(['/features/top-follow', {
+      // iduser: id
+    }]);
+  }
 }

@@ -25,6 +25,11 @@ export class UserService {
     return this.appApi.post('api/users/' + id, null);
   }
 
+  public getTopUser(params): Observable<any> {
+    // var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/paginated', params);
+  }
+
   public updateUser(params): Observable<any> {
     var token = this.UserModelService.usSession().token;
     return this.appApi.post('api/users/changePass', params, token);
@@ -35,15 +40,19 @@ export class UserService {
     return this.appApi.post('api/users/follow/paginated', params, token);
   }
 
+  public checkFollow(id): Observable<any> {
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/' + id + '/checkFollow', null, token);
+  }
+
   public follow(id): Observable<any> {
     var token = this.UserModelService.usSession().token;
-    return this.appApi.post('api/users/' + id + 'follow', null, token);
+    return this.appApi.post('api/users/' + id + '/follow', null, token);
   }
 
   public unfollow(id): Observable<any> {
     var token = this.UserModelService.usSession().token;
-    return this.appApi.post('api/users/' + id + 'unfollow', null, token);
+    return this.appApi.post('api/users/' + id + '/unfollow', null, token);
   }
-
 
 }

@@ -5,7 +5,9 @@
         <span (click)="skip()">Skip</span>
       </span>
       <br>
-      <span (click)="change()" style="font-size:10px">click here to regist or login</span>
+      <span *ngIf="!checkAdmin" (click)="checkAdmin = !checkAdmin; checklogin = true" style="font-size:10px">login admin</span>
+      <span *ngIf="checkAdmin" (click)="checkAdmin = !checkAdmin" style="font-size:10px">login user</span>
+      <span *ngIf="!checkAdmin" (click)="change()" style="font-size:10px">click here to regist or login</span>
     </h1>
 
   </div>

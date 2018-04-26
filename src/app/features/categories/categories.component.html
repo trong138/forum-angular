@@ -42,7 +42,7 @@
     <!-- Sidebar Widgets Column -->
     <div class="col-md-4">
 
-      <app-list-select (emitParams)="emitParams($event)"></app-list-select>
+      <app-list-select (search)="search($event)" (emitParams)="emitParams($event)"></app-list-select>
     </div>
   </div>
   <!-- /.row -->
@@ -67,6 +67,29 @@
       <div class="modal-footer">
         <button type="button" (click)="goToLogin()" class="btn btn-primary" data-dismiss="modal">OK Fine</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<button type="button" [hidden]="true" id="modal-delete-question" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">
+</button>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal1" style="padding-top: 200px">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">are you sure?</h4>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" (click)="goToLogin()" class="btn btn-danger" data-dismiss="modal">Sure</button>
+        <button type="button" class="btn btn-basic" data-dismiss="modal">Close</button>
       </div>
 
     </div>

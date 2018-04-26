@@ -16,4 +16,18 @@ export class CategoriesService {
         return this.appApi.post('api/categories/get', null);
     }
 
+    public add(params): Observable<any> {
+        var token = this.UserModelService.usSession().token;
+        return this.appApi.post('api/categories', params, token);
+    }
+
+    public delete(id): Observable<any> {
+        var token = this.UserModelService.usSession().token;
+        return this.appApi.post('api/categories/' + id + '/delete', null, token);
+    }
+
+    public update(params, id): Observable<any> {
+        var token = this.UserModelService.usSession().token;
+        return this.appApi.post('api/categories/' + id + '/update', params, token);
+    }
 }

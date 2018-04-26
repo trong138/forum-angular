@@ -25,12 +25,16 @@
                   <tr>
                     <div class="row">
                       <div class="col-sm-6">
-                        <div align="center">
+                        <div align="center" *ngIf="check_member">
 
                           <input (change)="changeImage($event)" id="profile-image-upload" class="hidden" type="file">
                           <label for="profile-image-upload">
                             <img [src]="imageProfile" class="img-thumbnail">click here to change profile image
                           </label>
+                        </div>
+
+                        <div align="center" *ngIf="!check_member">
+                          <img [src]="imageProfile" class="img-thumbnail">
                         </div>
                         <br>
                       </div>
@@ -97,7 +101,7 @@
 </div>
 
 
-<h1 class="my-4">Your Question
+<h1 class="my-4">Question
 </h1>
 
 <!-- Blog Post -->

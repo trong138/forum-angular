@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   private registFail;
   private check2;
   private UserLoginData;
+  private checkAdmin = false;
 
 
   constructor(private UserService: UserService,
@@ -56,6 +57,35 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    if (this.checkAdmin) {
+      this.loginAdmin();
+    } else {
+      this.loginUser();
+    }
+  }
+
+  loginAdmin() {
+    this.check2 = false;
+    var params = {
+      username: this.username,
+      password: this.password
+    }
+    this.UserService.login(params).subscribe(
+      data => {
+        console.log(data);
+        this.userModel.setCookieUserInfo(data);
+        this.Router.navigate(['/management', {
+          // iduser: this.userModel.getCookieUserInfo().id,
+        }], );
+      },
+      error => {
+        this.check = false;
+        console.log(error);
+      }
+    );
+  }
+
+  loginUser() {
     // this.Router.navigate(['/features', {
     //   // iduser: this.userModel.getCookieUserInfo().id,
     // }], );

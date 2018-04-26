@@ -3,10 +3,7 @@
   <h5 class="card-header">Search</h5>
   <div class="card-body">
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">Go!</button>
-      </span>
+      <input (change)="search($event)" type="text" class="form-control" placeholder="Search for...">
     </div>
   </div>
 </div>
@@ -19,6 +16,9 @@
       <tbody>
         <tr *ngIf="id_user" (click)="emitParams('you-follow',2)">
           <td>questions you follow</td>
+        </tr>
+        <tr *ngIf="id_user" (click)="emitParams('your-question',2)">
+          <td>your questions</td>
         </tr>
         <tr (click)="emitParams('not-answer',2)">
           <td>questions not answer</td>

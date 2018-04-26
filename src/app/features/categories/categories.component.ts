@@ -14,6 +14,8 @@ export class CategoriesComponent implements OnInit {
   private listCategories = [];
   private title;
   private id_user;
+  private statusList;
+  private categorySelect;
   constructor(private Router: Router,
     private userModal: UserModelService,
     private categories: CategoriesService,
@@ -31,6 +33,7 @@ export class CategoriesComponent implements OnInit {
 
 
   getListQuestion(page?) {
+    this.statusList = 'auto';
     this.listPost = [];
     var params = {
       "page": "0",
@@ -46,7 +49,24 @@ export class CategoriesComponent implements OnInit {
     })
   }
 
+  getListYourQuestion(page?) {
+    this.statusList = 'yourquestion';
+    var params = {
+      "page": page | 0,
+      "size": "100",
+      "sort": "-lastModified"
+    }
+    this.question.getWithIdUser(params, this.id_user).subscribe(data => {
+      console.log("getListQuestion", data);
+      this.listPost = data;
+    }, err => {
+      console.log("getListQuestion", err);
+    })
+  }
+
   getListWithCategory(category, page?) {
+    this.categorySelect = category;
+    this.statusList = 'category';
     this.listPost = [];
     var params = {
       "page": "0",
@@ -64,6 +84,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getListQuestionNotAnswer(page?) {
+    this.statusList = 'notanswer';
     this.listPost = [];
     var params = {
       'page': '0',
@@ -79,7 +100,26 @@ export class CategoriesComponent implements OnInit {
     })
   }
 
+  search(key) {
+    console.log(key);
+    this.statusList = 'search';
+    this.listPost = [];
+    var params = {
+      'page': '0',
+      'size': '100',
+      'keyword': key
+    }
+    this.question.search(params).subscribe(data => {
+      console.log("list-question-search", data);
+      this.listPost = data;
+      this.title = 'List Question';
+    }, err => {
+      console.log("err-list-question-search", err);
+    })
+  }
+
   getListQuestionFollow(page?) {
+    this.statusList = 'follow';
     this.listPost = [];
     var params = {
       "page": "0",
@@ -93,6 +133,20 @@ export class CategoriesComponent implements OnInit {
     }, err => {
       console.log("err-list-question-follow", err);
     })
+  }
+
+  reLoadListQuestion() {
+    if (this.statusList = 'auto') {
+      this.getListQuestion();
+    } else if (this.statusList = 'yourquestion') {
+      this.getListYourQuestion();
+    } else if (this.statusList = 'category') {
+      this.getListWithCategory(this.categorySelect);
+    } else if (this.statusList = 'notanswer') {
+      this.getListQuestionNotAnswer();
+    } else if (this.statusList = 'follow') {
+      this.getListQuestionNotAnswer();
+    }
   }
 
   goToCreateQuestion() {
@@ -126,6 +180,7 @@ export class CategoriesComponent implements OnInit {
   delete(id) {
     this.question.delete(id).subscribe(data => {
       console.log("delete-question", data);
+      this.reLoadListQuestion();
     }, err => {
       console.log("delete-question", err);
     })
@@ -137,6 +192,8 @@ export class CategoriesComponent implements OnInit {
         this.getListQuestionNotAnswer();
       } else if (event.text == 'you-follow') {
         this.getListQuestionFollow();
+      } else if (event.text == 'your-question') {
+        this.getListYourQuestion();
       }
     } else if (event.type == 1) {
       this.getListWithCategory(event.text);
