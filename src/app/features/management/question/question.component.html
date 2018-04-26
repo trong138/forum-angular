@@ -1,42 +1,173 @@
 <!-- Example DataTables Card-->
-<div class="card mb-3">
+<!-- <br> -->
+<!-- <button (click)="questionSelect = {};type_modal = 'add'" data-toggle="modal" data-target="#edit-quesiton" type="button" class="btn btn-primary">+ ADD QUESTION</button> -->
+<br>
+<div style="margin-top: 20px;" class="card mb-3">
   <div class="card-header">
-    <i class="fa fa-table"></i> Data Table Example</div>
+    <i class="fa fa-table"></i> List Question</div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <!-- <th>ID</th> -->
+            <th>Title</th>
+            <th>Category</th>
+            <!-- <th>Content</th> -->
+            <th>Detail</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
-        <tfoot>
-          <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
-          </tr>
-        </tfoot>
         <tbody>
-          <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
+          <tr *ngFor="let item of listQuestion">
+            <!-- <td>{{item.id}}</td> -->
+            <td>{{item.title}}</td>
+            <td>{{item.categoryName}}</td>
+            <!-- <td>{{item.content}}</td> -->
+
+            <td align="center">
+              <button (click)="questionSelect = item;getListAnswer(item.id);id_select = item.id;type_modal = 'detail'" data-toggle="modal"
+                data-target="#detail" type="button" class="btn btn-success">Detail</button>
+            </td>
+            <td align="center">
+              <button (click)="questionSelect = item;id_select = item.id;type_modal = 'edit'" data-toggle="modal" data-target="#edit-quesiton"
+                type="button" class="btn btn-primary">Edit</button>
+            </td>
+            <td align="center">
+              <button (click)="delete(item.id)" type="button" class="btn btn-danger">Delete</button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div>
+
+
+<!-- Modal -->
+<div id="edit-quesiton" class="modal fade" role="dialog" *ngIf="questionSelect">
+  <div style="max-width: 1000px;" class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit</h4>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <form>
+            <div class="form-group">
+              <label for="tittle-create">Tittle</label>
+              <input [(ngModel)]="questionSelect.title" name="tittle" type="email" class="form-control" id="tittle-create" aria-describedby="emailHelp"
+                placeholder="Tittle">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleSelect1">Category</label>
+              <select [(ngModel)]="questionSelect.categoryName" name="categoryName" class="form-control" id="exampleSelect1">
+                <option *ngFor="let item of listCategories" [value]='item.name'>{{item.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleTextarea">Content</label>
+              <textarea [(ngModel)]="questionSelect.content" name="content" class="form-control" id="exampleTextarea" rows="5"></textarea>
+            </div>
+            <!-- <div class="form-group">
+                  <label for="exampleInputFile">File input</label>
+                  <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                  <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+                </div> -->
+
+          </form>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button [disabled]='!(questionSelect.title && questionSelect.content && questionSelect.categoryName)' type="submit" (click)="submit()"
+          data-dismiss="modal" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="detail" class="modal fade" role="dialog" *ngIf="questionSelect">
+  <div style="max-width: 1000px;" class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Post Content Column -->
+
+        <div class="container" style="padding-top: 30px;" *ngIf='questionSelect'>
+
+          <!-- Title -->
+
+
+          <!-- Date/Time -->
+          <div class="media mb-4">
+            <img style="height: 50px;width: 50px;" class="d-flex mr-3 rounded-circle" [src]="questionSelect.userAvatar" alt="">
+            <div class="media-body">
+              <h5 class="mt-0">{{questionSelect.userUsername}}</h5>
+            </div>
+          </div>
+
+          <hr>
+          <h1 class="mt-4">Title : {{questionSelect.title}}
+
+          </h1>
+
+          <!-- Post Content -->
+          <p class="lead">Content : {{questionSelect.content}}</p>
+          <hr> {{questionSelect.vote}} : Vote.
+          <br>
+          <hr>
+          <h2>Answer</h2>
+          <hr>
+          <div *ngIf="list_answer">
+            <!-- Single Comment -->
+            <div class="media mb-4" *ngFor='let answer of list_answer;let i = index'>
+              <img (click)="userInfo(answer.userId)" style="height: 50px;width: 50px;" class="d-flex mr-3 rounded-circle" [src]="answer.userAvatar"
+                alt="">
+              <div class="media-body">
+                <h5 (click)="userInfo(answer.userId)" class="mt-0">{{answer.userUsername}}
+                </h5>
+                <span *ngIf="!checkEdit[i]">
+                  {{answer.content}}
+                  <br>
+                  <a>
+
+                    <a (click)="checkEdit[i] = true; textEdit = answer.content" style="font-weight: 100;color:seagreen">Edit</a> -
+                    <a (click)="deleteAnswer(answer.id)" style="font-weight: 100;color: seagreen">Delete</a>
+                  </a>
+                  ---------------------------- {{answer.vote}} : Vote
+
+
+                </span>
+                <form *ngIf="checkEdit[i]">
+                  <div class="form-group">
+                    <textarea [(ngModel)]="textEdit" name="textEdit" class="form-control" rows="3"></textarea>
+                  </div>
+                  <button [disabled]='!textEdit' (click)="editAnswer(answer.id);checkEdit[i] = false" type="submit" class="btn btn-primary">Submit</button>
+                  <button (click)="checkEdit[i] = false" type="submit" class="btn btn-basic">Cancel</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+      </div>
+    </div>
+
+  </div>
 </div>

@@ -1,3 +1,136 @@
-<p>
-  user works!
-</p>
+<!-- Example DataTables Card-->
+<!-- <br> -->
+<!-- <button (click)="userInfo = {};type_modal = 'add'" data-toggle="modal" data-target="#edit-user" type="button" class="btn btn-primary">+ ADD QUESTION</button> -->
+<br>
+<div style="margin-top: 20px;" class="card mb-3">
+  <div class="card-header">
+    <i class="fa fa-table"></i> List Question</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <!-- <th>ID</th> -->
+            <th>Username</th>
+            <th>FullName</th>
+            <th>Email</th>
+            <th>Detail</th>
+            <th>Admin</th>
+            <th>Ban</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listUser">
+            <!-- <td>{{item.id}}</td> -->
+            <td>{{item.username}}</td>
+            <td>{{item.fullname}}</td>
+            <td>{{item.email}}</td>
+            <td align="center">
+              <button (click)="userInfo = item;id_select = item.id;type_modal = 'detail'" data-toggle="modal" data-target="#edit-user"
+                type="button" class="btn btn-primary">Detail</button>
+            </td>
+            <td align="center">
+              <button [disabled]="item.admin" (click)="admin(item.id)" type="button" class="btn btn-success"> + Admin</button>
+            </td>
+            <td align="center">
+              <button [disabled]="item.admin" *ngIf="!item.banned" (click)="ban(item.id)" type="button" class="btn btn-danger">Ban</button>
+              <button [disabled]="item.admin" *ngIf="item.banned" (click)="unban(item.id)" type="button" class="btn btn-danger">UnBan</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="edit-user" class="modal fade" role="dialog" *ngIf="userInfo">
+  <div style="max-width: 1000px;" class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Detail</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <div class="panel-body">
+
+          <div class="box box-info">
+
+            <div class="box-body">
+
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <div align="center">
+                      <img style="height: 200px;width: 200px" [src]="userInfo.avatar" class="img-thumbnail">
+                    </div>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr>
+                    <th scope="row">
+                      Name
+                    </th>
+                    <td>
+                      {{userInfo.fullname}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Email
+                    </th>
+                    <td>
+                      {{userInfo.email}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Username
+                    </th>
+                    <td>
+                      {{userInfo.username}}
+                    </td>
+
+
+                    <tr>
+                      <th scope="row">
+                        Vote
+                      </th>
+                      <td>
+                        {{userInfo.vote}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        Follwers
+                      </th>
+                      <td>
+                        {{userInfo.followers}}
+                      </td>
+                    </tr>
+                </tbody>
+              </table>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+          </div>
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

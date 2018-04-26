@@ -55,4 +55,19 @@ export class UserService {
     return this.appApi.post('api/users/' + id + '/unfollow', null, token);
   }
 
+  public ban(id): Observable<any> {
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/' + id + '/ban', null, token);
+  }
+
+  public unban(id): Observable<any> {
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/' + id + '/unban', null, token);
+  }
+
+  public admin(id): Observable<any> {
+    var token = this.UserModelService.usSession().token;
+    return this.appApi.post('api/users/' + id + '/changeAdmin', null, token);
+  }
+
 }
