@@ -35,7 +35,7 @@ export class AppAPIService {
       });
   }
 
-  public uploadBlob(url: string, file, params: object, type?: string, options?: any): Observable<any> {
+  public uploadBlob(url: string, file, params: object, token?: any, type?: string, options?: any): Observable<any> {
     console.log("uploadBlob", params);
     let input = new FormData();
     for (var key in params) {
@@ -48,8 +48,8 @@ export class AppAPIService {
     } else {
       input.append('file', file);
     }
-    console.log("input", input)
-    return this.nextLayer.uploadBlob(url, input, options)
+    // var token = this.UserModelService.usSession().token;
+    return this.nextLayer.uploadBlob(url, input, token)
       .map(response => {
         if (response && response.status == 'OK') {
           return response;

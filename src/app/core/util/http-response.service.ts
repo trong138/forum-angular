@@ -26,7 +26,6 @@ export class HttpResponseService {
       });
   }
   public uploadBlob(url: string, params: FormData, options?: any): Observable<any> {
-    console.log("uploadBlob1", params);
     return this.nextLayer.uploadBlob(url, params, options)
       .map(response => {
         return response._body.result;

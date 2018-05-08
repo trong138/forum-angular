@@ -34,6 +34,9 @@ export class UserComponent implements OnInit {
       this.getListUser();
     }, err => {
       console.log('admin', err);
+      if (err.status == 403) {
+        document.getElementById('id_model_user_management').click();
+      }
     })
   }
 

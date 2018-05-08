@@ -17,34 +17,23 @@
   <h1 class="mt-4">{{question_detail.title}}
 
   </h1>
-  <hr>
-  <button (click)="follow()" *ngIf="!check_follow" type="button" class="btn btn-info btn-sm">Follow</button>
-  <button (click)="unfollow()" *ngIf="check_follow" type="button" class="btn btn-info btn-sm">UnFollow</button>
+  <hr *ngIf="id_user">
+  <button (click)="follow()" *ngIf="!check_follow && id_user" type="button" class="btn btn-info btn-sm">Follow</button>
+  <button (click)="unfollow()" *ngIf="check_follow && id_user" type="button" class="btn btn-info btn-sm">UnFollow</button>
   <hr>
 
   <!-- Post Content -->
   <p class="lead">{{question_detail.content}}</p>
   <hr> {{question_detail.vote}} : Vote.
   <br>
-  <button (click)="vote()" *ngIf="question_detail.voteUserIds.indexOf(id_user) == -1" type="button" class="btn btn-primary btn-sm">
+  <button (click)="vote()" *ngIf="id_user && question_detail.voteUserIds.indexOf(id_user) == -1" type="button" class="btn btn-primary btn-sm">
     Vote
   </button>
-  <button (click)="unvote()" *ngIf="question_detail.voteUserIds.indexOf(id_user) != -1" type="button" class="btn btn-default btn-sm">
+  <button (click)="unvote()" *ngIf="id_user && question_detail.voteUserIds.indexOf(id_user) != -1" type="button" class="btn btn-default btn-sm">
     UnVote
   </button>
   <hr>
   <!-- Comments Form -->
-  <div class="card my-4">
-    <h5 class="card-header">Leave a Comment:</h5>
-    <div class="card-body">
-      <form>
-        <div class="form-group">
-          <textarea [(ngModel)]="textComment" name="textComment" class="form-control" rows="3"></textarea>
-        </div>
-        <button [disabled]='!textComment' (click)="comment()" type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  </div>
   <div *ngIf="list_answer">
     <!-- Single Comment -->
     <div class="media mb-4" *ngFor='let answer of list_answer;let i = index'>
@@ -54,21 +43,22 @@
         <h5 (click)="userInfo(answer.userId)" class="mt-0">{{answer.userUsername}}
         </h5>
         <span *ngIf="!checkEdit[i]">
-          {{answer.content}}
+          <p [innerHTML]="answer.content"></p>
           <br>
           <a *ngIf="id_user == answer.userId">
 
-            <a (click)="checkEdit[i] = true; textEdit = answer.content" style="font-weight: 100;color:seagreen">Edit</a> -
+            <a (click)="textEdit = answer.content; initEdit(i)" style="font-weight: 100;color:seagreen">Edit</a> -
             <a (click)="deleteAnswer(answer.id)" style="font-weight: 100;color: seagreen">Delete</a>
           </a>
           ---------------------------- {{answer.vote}} : Vote......
-          <a *ngIf="answer.voteUserIds.indexOf(id_user) == -1" (click)="voteAnswer(answer.id)" style="font-weight: 100;color:seagreen">Vote</a>
-          <a *ngIf="answer.voteUserIds.indexOf(id_user) != -1" (click)="unvoteAnswer(answer.id)" style="font-weight: 100;color: seagreen">Unvote</a>
+          <a *ngIf="answer.voteUserIds.indexOf(id_user) == -1 && id_user" (click)="voteAnswer(answer.id)" style="font-weight: 100;color:seagreen">Vote</a>
+          <a *ngIf="answer.voteUserIds.indexOf(id_user) != -1 && id_user" (click)="unvoteAnswer(answer.id)" style="font-weight: 100;color: seagreen">Unvote</a>
 
         </span>
         <form *ngIf="checkEdit[i]">
           <div class="form-group">
-            <textarea [(ngModel)]="textEdit" name="textEdit" class="form-control" rows="3"></textarea>
+            <textarea name="textEdit"></textarea>
+            <!-- <ckeditor [(ngModel)]="textEdit" name="textEdit"> </ckeditor> -->
           </div>
           <button [disabled]='!textEdit' (click)="editAnswer(answer.id);checkEdit[i] = false" type="submit" class="btn btn-primary">Submit</button>
           <button (click)="checkEdit[i] = false" type="submit" class="btn btn-basic">Cancel</button>
@@ -77,4 +67,40 @@
     </div>
   </div>
 
+  <!-- The Modal -->
+  <div class="modal" id="detailPost">
+    <div class="modal-dialog" style="margin-top: 100px;">
+      <div class="modal-content">
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          content null
+        </div>
+        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+        <!-- Modal footer -->
+        <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div> -->
+
+      </div>
+    </div>
+  </div>
+  <div class="card my-4" *ngIf="id_user">
+    <h5 class="card-header">Leave a Comment:</h5>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <!-- <textarea [(ngModel)]="textComment" name="textComment" class="form-control" rows="3"></textarea> -->
+
+          <textarea name="textComment"> </textarea>
+
+          <!-- <ckeditor [(ngModel)]="textComment" name="textComment"> </ckeditor> -->
+        </div>
+        <button (click)="comment()" type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>
+
+<button [hidden]="true" type="button" id="id_model_detail_post" class="btn btn-primary" data-toggle="modal" data-target="#detailPost">
+</button>

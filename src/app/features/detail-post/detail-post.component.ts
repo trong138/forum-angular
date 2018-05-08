@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionsService } from '../../core/api/questions.service';
 import { AnswerService } from '../../core/api/answer.service';
 import { UserModelService } from '../../core/model/user-model.service';
-
+declare var CKEDITOR: any;
 @Component({
   selector: 'app-detail-post',
   templateUrl: './detail-post.component.html',
@@ -29,7 +29,6 @@ export class DetailPostComponent implements OnInit {
         if (id) {
           this.getPrivate(id);
           this.getListAnswer(id);
-          this.checkFollow(id);
           this.id_question = id;
         }
       });
@@ -39,7 +38,24 @@ export class DetailPostComponent implements OnInit {
     if (this.userModal.getCookieUserInfo()) {
       this.id_user = this.userModal.getCookieUserInfo().id;
       console.log("id_user", this.id_user);
+      this.checkFollow(this.id_question);
+      setTimeout(() => {
+        CKEDITOR.replace('textComment');
+      }, 300);
+    } else {
+      this.id_user = null;
     }
+  }
+
+  initEdit(id) {
+    for (let i = 0; i < this.checkEdit.length; i++) {
+      this.checkEdit[i] = false;
+    }
+    this.checkEdit[id] = true;
+    setTimeout(() => {
+      CKEDITOR.replace('textEdit');
+      CKEDITOR.instances.textEdit.setData(this.textEdit);
+    }, 10);
   }
 
   getPrivate(id) {
@@ -83,17 +99,22 @@ export class DetailPostComponent implements OnInit {
   }
 
   comment() {
-    console.log(this.textComment);
-    var params = {
-      content: this.textComment
+    this.textComment = CKEDITOR.instances.textComment.getData();
+    if (this.textComment == "") {
+      document.getElementById('id_model_detail_post').click();
+    } else {
+      var params = {
+        content: this.textComment
+      }
+      console.log("textComment", this.textComment)
+      this.answer.answer(params, this.id_question).subscribe(data => {
+        console.log("answer-success", data);
+        this.getListAnswer(this.id_question);
+        CKEDITOR.instances.textComment.setData('');
+      }, err => {
+        console.log("answer-err", err);
+      })
     }
-    this.answer.answer(params, this.id_question).subscribe(data => {
-      console.log("answer-success", data);
-      this.getListAnswer(this.id_question);
-      this.textComment = "";
-    }, err => {
-      console.log("answer-err", err);
-    })
   }
 
   userInfo(id) {
@@ -139,15 +160,20 @@ export class DetailPostComponent implements OnInit {
   }
 
   editAnswer(id) {
-    var params = {
-      content: this.textEdit
-    };
-    this.answer.edit(params, id).subscribe(data => {
-      console.log("update", data);
-      this.getListAnswer(this.id_question);
-    }, err => {
-      console.log("update", err);
-    })
+    this.textEdit = CKEDITOR.instances.textEdit.getData();
+    if (this.textEdit == "") {
+      document.getElementById('id_model_detail_post').click();
+    } else {
+      var params = {
+        content: this.textEdit
+      };
+      this.answer.edit(params, id).subscribe(data => {
+        console.log("update", data);
+        this.getListAnswer(this.id_question);
+      }, err => {
+        console.log("update", err);
+      })
+    }
   }
 
   deleteAnswer(id) {

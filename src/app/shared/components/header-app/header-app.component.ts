@@ -4,6 +4,10 @@ import { LocalStorageService } from '../../../core/util/local-storage.service';
 import { UserModelService } from '../../../core/model/user-model.service';
 import { UserService } from '../../../core/api/user.service';
 import { ConfigService } from '../../../core/config.service';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import { APP_CONFIG } from '../../../core/config.const';
+
 
 @Component({
   selector: 'app-header',
@@ -20,6 +24,7 @@ export class HeaderAppComponent implements OnInit {
     { name: 'My Profile', value: 5 },
     { name: 'Logout', value: 6 },
   ];
+  ws;
   private id_user;
   private userInfo;
   private imageProfile;
@@ -36,7 +41,22 @@ export class HeaderAppComponent implements OnInit {
       this.id_user = this.userModal.getCookieUserInfo().id;
       console.log("id_user", this.id_user);
     }
+    // this.connect();
+  }
 
+  connect() {
+    var host = APP_CONFIG[0].base_url;
+    var url = host + 'socket';
+    let socket = new SockJS(url);
+    this.ws = Stomp.over(socket);
+    let that = this;
+    this.ws.connect({}, data => {
+      that.ws.subscribe('/notify/' + this.id_user, mess => {
+        console.log('gfdnsgkjsdhg', mess);
+      })
+    }, err => {
+
+    })
   }
 
   changePage(id) {

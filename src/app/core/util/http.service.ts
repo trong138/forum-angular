@@ -34,11 +34,12 @@ export class HttpService {
     );
   }
 
-  public uploadBlob(url: string, params: FormData, options?: RequestOptionsArgs): Observable<any> {
+  public uploadBlob(url: string, params: FormData, token?: any): Observable<any> {
     console.log("uploadBlob2", params)
     return this.http.post(
       this.getFullUrl(url),
-      params
+      params,
+      this.requestOptions(token)
     );
   }
 
@@ -85,7 +86,7 @@ export class HttpService {
 
   private requestOptions(token?): RequestOptionsArgs {
     const headers = new Headers();
-    headers.append('Content-Type', 'application/json; charset=utf-8');
+    // headers.append('Content-Type', 'application/json; charset=utf-8');
     if (token) {
       headers.append('Authorization', token);
     }

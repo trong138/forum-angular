@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../core/api/user.service';
 import { UserModelService } from '../../core/model/user-model.service';
 import { QuestionsService } from '../../core/api/questions.service';
+import { AppAPIService } from '../../core/util/app-api.service';
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
@@ -25,6 +26,7 @@ export class UserInfoComponent implements OnInit {
     private UserModelService: UserModelService,
     private Router: Router,
     private user: UserService,
+    private apiService: AppAPIService,
     private question: QuestionsService) {
     this.route.params
       .map(params => params['iduser'])
@@ -188,18 +190,37 @@ export class UserInfoComponent implements OnInit {
   follow() {
     this.user.follow(this.id_user).subscribe(data => {
       console.log("follow", data);
-      this.checkFollow(this.id_user);
+      this.check_follow = !this.check_follow;
     }, err => {
       console.log("follow", err);
     })
   }
 
   unfollow() {
-    this.question.unfollow(this.id_user).subscribe(data => {
+    this.user.unfollow(this.id_user).subscribe(data => {
       console.log("unfollow", data);
-      this.checkFollow(this.id_user);
+      this.check_follow = !this.check_follow;
     }, err => {
       console.log("unfollow", err);
     })
+  }
+
+  changeImage(event) {
+    var file = event.target.files[0];
+    console.log(file);
+    var token = this.UserModelService.usSession().token;
+    this.apiService.uploadBlob(
+      'api/users/changeProfile',
+      file, {}, token).subscribe(
+        data => {
+          console.log('success');
+          this.imageProfile = data.avatar;
+          // this.getImageProfile();
+        },
+        (error) => {
+          console.log("onSubmit error", error);
+          // this.getImageProfile();
+        }
+      );
   }
 }
