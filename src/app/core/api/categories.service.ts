@@ -9,8 +9,7 @@ import { ConfigService } from '../config.service';
 export class CategoriesService {
 
     constructor(private appApi: AppAPIService,
-        private UserModelService: UserModelService,
-        private ConfigService: ConfigService) { }
+        private UserModelService: UserModelService) { }
 
     public get(): Observable<any> {
         return this.appApi.post('api/categories/get', null);

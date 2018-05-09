@@ -17,14 +17,15 @@
     </div>
     <div class="form-group">
       <label for="exampleTextarea">Content</label>
-      <textarea [(ngModel)]="content" name="content" class="form-control" id="exampleTextarea" rows="5"></textarea>
+      <!-- <textarea [(ngModel)]="content" name="content" class="form-control" id="exampleTextarea" rows="5"></textarea> -->
+      <textarea name="content"></textarea>
     </div>
     <!-- <div class="form-group">
       <label for="exampleInputFile">File input</label>
       <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
       <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
     </div> -->
-    <button [disabled]="!(tittle && content && category)" data-toggle="modal" data-target="#myModalCreateEdit" class="btn btn-primary">Submit</button>
+    <button [disabled]="!(tittle && category)" data-toggle="modal" data-target="#myModalCreateEdit" class="btn btn-primary">Submit</button>
     <button (click)="cancal()" class="btn btn-basic">Cancel</button>
   </form>
 </div>
@@ -53,3 +54,25 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal" id="create-edit">
+    <div class="modal-dialog" style="margin-top: 100px;">
+      <div class="modal-content">
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          content null
+        </div>
+        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+        <!-- Modal footer -->
+        <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div> -->
+
+      </div>
+    </div>
+  </div>
+
+  <button [hidden]="true" type="button" id="id_model_create_edit" class="btn btn-primary" data-toggle="modal" data-target="#create-edit">
+    </button>

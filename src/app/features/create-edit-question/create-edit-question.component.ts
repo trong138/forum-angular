@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from '../../core/api/categories.service';
 import { QuestionsService } from '../../core/api/questions.service';
 import { Router, ActivatedRoute } from '@angular/router';
-
+declare var CKEDITOR: any;
 @Component({
   selector: 'app-create-edit-question',
   templateUrl: './create-edit-question.component.html',
@@ -19,6 +19,7 @@ export class CreateEditQuestionComponent implements OnInit {
     private Router: Router,
     private route: ActivatedRoute,
     private question: QuestionsService) {
+
     this.route.params
       .map(params => params['id'])
       .subscribe((id) => {
@@ -31,14 +32,18 @@ export class CreateEditQuestionComponent implements OnInit {
   }
 
   ngOnInit() {
+    CKEDITOR.replace('content');
+
     this.getListCategories();
+
   }
 
   getQuestion(id) {
     this.question.detail(id).subscribe(data => {
       this.tittle = data.title;
-      this.content = data.content;
+      // this.content = data.content;
       this.category = data.categoryName;
+      this.content = CKEDITOR.instances.content.setData(data.content);
       console.log('getQuestion', data);
     }, err => {
       console.log('getQuestion', err);
@@ -55,10 +60,15 @@ export class CreateEditQuestionComponent implements OnInit {
   }
 
   submit() {
-    if (this.type_page == 'create') {
-      this.createQuestion();
-    } else if (this.type_page == 'edit') {
-      this.editQuestion();
+    this.content = CKEDITOR.instances.content.getData();
+    if (this.content == "") {
+      document.getElementById('id_model_create_edit').click();
+    } else {
+      if (this.type_page == 'create') {
+        this.createQuestion();
+      } else if (this.type_page == 'edit') {
+        this.editQuestion();
+      }
     }
   }
 

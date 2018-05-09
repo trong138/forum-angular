@@ -7,6 +7,7 @@ import { ConfigService } from '../../../core/config.service';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { APP_CONFIG } from '../../../core/config.const';
+import { NotificationService } from '../../../core/api/notification.service';
 
 
 @Component({
@@ -25,14 +26,18 @@ export class HeaderAppComponent implements OnInit {
     { name: 'Logout', value: 6 },
   ];
   ws;
+  private count = 0;
   private id_user;
   private userInfo;
   private imageProfile;
+  private notify_not_seen;
+  listNotification = [];
   constructor(private Router: Router,
     private storage: LocalStorageService,
     private UserService: UserService,
     private userModal: UserModelService,
-    private ConfigService: ConfigService
+    private ConfigService: ConfigService,
+    private notification: NotificationService
   ) { }
 
   ngOnInit() {
@@ -41,7 +46,8 @@ export class HeaderAppComponent implements OnInit {
       this.id_user = this.userModal.getCookieUserInfo().id;
       console.log("id_user", this.id_user);
     }
-    // this.connect();
+    this.connect();
+    this.getNotification();
   }
 
   connect() {
@@ -52,11 +58,55 @@ export class HeaderAppComponent implements OnInit {
     let that = this;
     this.ws.connect({}, data => {
       that.ws.subscribe('/notify/' + this.id_user, mess => {
-        console.log('gfdnsgkjsdhg', mess);
+        console.log('data-notify', JSON.parse(mess.body));
+        this.listNotification.splice(0, 0, JSON.parse(mess.body));
+        // this.listNotification.push();
+        this.checkNumberNotify();
       })
     }, err => {
 
     })
+  }
+
+  seenNotify() {
+    this.notification.seen().subscribe(data => {
+      console.log("data-notification", data);
+      this.getNotification();
+      this.count == 0;
+    }, err => {
+      console.log("err-notification", err);
+    })
+  }
+
+  getNotification(page?) {
+    this.listNotification = [];
+    var params = {
+      page: 0,
+      size: 100
+    }
+    this.notification.get(params).subscribe(data => {
+      console.log("data-notification", data);
+      this.listNotification = data;
+      this.checkNumberNotify();
+    }, err => {
+      console.log("err-notification", err);
+    })
+  }
+
+  goToQuestion(id) {
+    this.Router.navigate(['/features/detail-post', {
+      id: id
+    }]);
+  }
+
+  checkNumberNotify() {
+    var number = 0;
+    for (let i = 0; i < this.listNotification.length; i++) {
+      if (this.listNotification[i].seen == false) {
+        number++;
+      }
+    }
+    this.notify_not_seen = number;
   }
 
   changePage(id) {

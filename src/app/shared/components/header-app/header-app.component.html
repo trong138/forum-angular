@@ -9,11 +9,37 @@
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto">
+          <li data-toggle="dropdown" *ngIf="notify_not_seen" style="    
+          color: red;
+          border-radius: 25%;
+          position: absolute;
+          padding-left: 4px;
+          margin-left: 20px;
+          font-size: 12px;
+          background-color: cornflowerblue;
+          z-index: 1;">{{notify_not_seen}}</li>
+          <li>
+            <div class="dropdown">
+              <!-- <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                <span class="caret"></span> 
+              </button>-->
+              <img src="./../../../../assets/image/world.png" data-toggle="dropdown" style="height: 30px;padding-right: 20px" alt="">
+              <ul class="dropdown-menu" style="max-height: 500px;padding: 20px;overflow-x: auto;">
+                <li (click)="goToQuestion(item.questionId) ; seenNotify()" style="width: 400px" *ngFor="let item of listNotification let i = index">
+                  <a *ngIf="item.seen" style="color: gray">{{item.content}}</a>
+                  <a *ngIf="!item.seen" style="color: black">{{item.content}}</a>
+                  <hr *ngIf="i != listNotification.length -1">
+                </li>
+              </ul>
+            </div>
+          </li>
           <li class="nav-item" (click)="changePage(item.value)" *ngFor="let item of listTitle">
             <a *ngIf="item.value != 6 && item.value !=5" class="nav-link">{{item.name}}</a>
             <a *ngIf="(item.value == 6 || item.value == 5 )&& id_user" class="nav-link">{{item.name}}</a>
           </li>
+
         </ul>
+
       </div>
     </nav>
 

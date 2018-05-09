@@ -31,7 +31,7 @@
                 data-target="#detail" type="button" class="btn btn-success">Detail</button>
             </td>
             <td align="center">
-              <button (click)="questionSelect = item;id_select = item.id;type_modal = 'edit'" data-toggle="modal" data-target="#edit-quesiton"
+              <button (click)="questionSelect = item;id_select = item.id;type_modal = 'edit';initEdit(item.content)" data-toggle="modal" data-target="#edit-quesiton"
                 type="button" class="btn btn-primary">Edit</button>
             </td>
             <td align="center">
@@ -72,7 +72,7 @@
             </div>
             <div class="form-group">
               <label for="exampleTextarea">Content</label>
-              <textarea [(ngModel)]="questionSelect.content" name="content" class="form-control" id="exampleTextarea" rows="5"></textarea>
+              <textarea name="contentEdit"></textarea>
             </div>
             <!-- <div class="form-group">
                   <label for="exampleInputFile">File input</label>
@@ -85,7 +85,7 @@
 
       </div>
       <div class="modal-footer">
-        <button [disabled]='!(questionSelect.title && questionSelect.content && questionSelect.categoryName)' type="submit" (click)="submit()"
+        <button [disabled]='!(questionSelect.title && questionSelect.categoryName)' type="submit" (click)="submit()"
           data-dismiss="modal" class="btn btn-primary">Submit</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
@@ -124,7 +124,7 @@
           </h1>
 
           <!-- Post Content -->
-          <p class="lead">Content : {{questionSelect.content}}</p>
+          <p class="lead" [innerHTML]="questionSelect.content"></p>
           <hr> {{questionSelect.vote}} : Vote.
           <br>
           <hr>
@@ -139,11 +139,11 @@
                 <h5 (click)="userInfo(answer.userId)" class="mt-0">{{answer.userUsername}}
                 </h5>
                 <span *ngIf="!checkEdit[i]">
-                  {{answer.content}}
+                  <p [innerHTML]="answer.content"></p>
                   <br>
                   <a>
 
-                    <a (click)="checkEdit[i] = true; textEdit = answer.content" style="font-weight: 100;color:seagreen">Edit</a> -
+                    <a (click)="textEdit = answer.content;initEditDetail(i)" style="font-weight: 100;color:seagreen">Edit</a> -
                     <a (click)="deleteAnswer(answer.id)" style="font-weight: 100;color: seagreen">Delete</a>
                   </a>
                   ---------------------------- {{answer.vote}} : Vote
@@ -152,7 +152,7 @@
                 </span>
                 <form *ngIf="checkEdit[i]">
                   <div class="form-group">
-                    <textarea [(ngModel)]="textEdit" name="textEdit" class="form-control" rows="3"></textarea>
+                    <textarea name="textEdit"></textarea>
                   </div>
                   <button [disabled]='!textEdit' (click)="editAnswer(answer.id);checkEdit[i] = false" type="submit" class="btn btn-primary">Submit</button>
                   <button (click)="checkEdit[i] = false" type="submit" class="btn btn-basic">Cancel</button>
@@ -169,5 +169,27 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+
+<button [hidden]="true" type="button" id="id_model_edit" class="btn btn-primary" data-toggle="modal" data-target="#detailPost">
+</button>
+
+<div class="modal" id="detailPost">
+  <div class="modal-dialog" style="margin-top: 100px;">
+    <div class="modal-content">
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        content null
+      </div>
+      <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+      <!-- Modal footer -->
+      <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div> -->
+
+    </div>
   </div>
 </div>

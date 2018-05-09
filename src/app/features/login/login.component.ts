@@ -73,10 +73,15 @@ export class LoginComponent implements OnInit {
     this.UserService.login(params).subscribe(
       data => {
         console.log(data);
-        this.userModel.setCookieUserInfo(data);
-        this.Router.navigate(['/management', {
-          // iduser: this.userModel.getCookieUserInfo().id,
-        }], );
+        if (data.admin == true) {
+          this.userModel.setCookieUserInfo(data);
+          this.Router.navigate(['/management', {
+            // iduser: this.userModel.getCookieUserInfo().id,
+          }], );
+
+        } else {
+          this.check = false;
+        }
       },
       error => {
         this.check = false;
