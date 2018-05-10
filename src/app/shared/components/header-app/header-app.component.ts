@@ -167,9 +167,9 @@ export class HeaderAppComponent implements OnInit {
   }
 
   goToHome() {
-    this.Router.navigate(['/features/home', {
-      // iduser: this.userModal.getCookieUserInfo().id,
-    }]);
+    // this.Router.navigate(['/features/home', {
+    //   // iduser: this.userModal.getCookieUserInfo().id,
+    // }]);
   }
 
   goToInfo() {
