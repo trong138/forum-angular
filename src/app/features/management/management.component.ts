@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 })
 export class ManagementComponent implements OnInit {
   listTitle = [
-    { name: 'Category', value: 0, select: false },
-    { name: 'Question', value: 1, select: true },
+    { name: 'Category', value: 0, select: true },
+    { name: 'Question', value: 1, select: false },
     { name: 'User', value: 2, select: false },
     // { name: 'My Profile', value: 3, select: false },
     { name: 'Logout', value: 4, select: false },

@@ -51,7 +51,7 @@ export class AppAPIService {
     // var token = this.UserModelService.usSession().token;
     return this.nextLayer.uploadBlob(url, input, token)
       .map(response => {
-        if (response && response.status == 'OK') {
+        if (response) {
           return response;
         } else {
           throw Observable.throw(response);

@@ -17,9 +17,9 @@
   <h1 class="mt-4">{{question_detail.title}}
 
   </h1>
-  <hr *ngIf="id_user">
-  <button (click)="follow()" *ngIf="!check_follow && id_user" type="button" class="btn btn-info btn-sm">Follow</button>
-  <button (click)="unfollow()" *ngIf="check_follow && id_user" type="button" class="btn btn-info btn-sm">UnFollow</button>
+  <hr *ngIf="id_user && !check_my_question">
+  <button (click)="follow()" *ngIf="!check_follow && id_user && !check_my_question" type="button" class="btn btn-info btn-sm">Follow</button>
+  <button (click)="unfollow()" *ngIf="check_follow && id_user && !check_my_question" type="button" class="btn btn-info btn-sm">UnFollow</button>
   <hr>
 
   <!-- Post Content -->
@@ -66,7 +66,12 @@
       </div>
     </div>
   </div>
+  <hr>
 
+  <button (click)="loadMore()" type="button" class="btn btn-primary btn-sm">
+    Load More
+  </button>
+  <hr>
   <!-- The Modal -->
   <div class="modal" id="detailPost">
     <div class="modal-dialog" style="margin-top: 100px;">

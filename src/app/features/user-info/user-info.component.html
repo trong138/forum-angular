@@ -76,7 +76,7 @@
     <div class="col-lg-2"></div>
     <div class="col-lg-8">
       <form>
-        <p style="text-align: center; color : red">fail</p>
+        <p *ngIf="!check_change_password" style="text-align: center; color : red">Change Password Fail</p>
         <div class="form-group">
           <label for="oldpassword">Old Password</label>
           <input type="password" [(ngModel)]="oldpassword" name="oldpassword" class="form-control" id="oldpassword">

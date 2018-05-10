@@ -21,6 +21,7 @@ export class UserInfoComponent implements OnInit {
   private imageProfile;
   private check_member;
   private check_follow = false;
+  private check_change_password = true;
   constructor(private route: ActivatedRoute,
     private UserSevice: UserService,
     private UserModelService: UserModelService,
@@ -75,28 +76,6 @@ export class UserInfoComponent implements OnInit {
   ngOnInit() {
   }
 
-  // changeImage(event) {
-  //   var file = event.target.files[0];
-  //   console.log(file);
-
-  //   this.apiService.uploadBlob(
-  //     'api/user/upload_profile',
-  //     file,
-  //     {
-  //       token: this.UserModelService.usSession().accesskey,
-  //       username: this.userInfo.username
-  //     }).subscribe(
-  //       data => {
-  //         console.log('success');
-  //         // this.getImageProfile();
-  //       },
-  //       (error) => {
-  //         console.log("onSubmit error", error);
-  //         // this.getImageProfile();
-  //       }
-  //     );
-  // }
-
   getImageProfile(avatar) {
     // var url = this.ConfigService.getBaseURL();
     this.imageProfile = avatar;
@@ -113,8 +92,10 @@ export class UserInfoComponent implements OnInit {
       if (this.password == this.password2) {
         this.updateUser();
       } else {
-        ////
+        this.check_change_password = false;
       }
+    } else {
+      this.check_change_password = false;
     }
 
   }
@@ -130,8 +111,10 @@ export class UserInfoComponent implements OnInit {
       console.log("updateUser", data);
       this.getUserInfo(this.userInfo.id);
       this.checkInfo = 0;
+      this.check_change_password = true;
     }, err => {
       console.log(err);
+      this.check_change_password = false;
     })
   }
 
@@ -213,13 +196,11 @@ export class UserInfoComponent implements OnInit {
       'api/users/changeProfile',
       file, {}, token).subscribe(
         data => {
-          console.log('success');
+          console.log('success', data);
           this.imageProfile = data.avatar;
-          // this.getImageProfile();
         },
         (error) => {
           console.log("onSubmit error", error);
-          // this.getImageProfile();
         }
       );
   }

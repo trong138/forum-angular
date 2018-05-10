@@ -22,6 +22,8 @@ export class QuestionComponent implements OnInit {
   listCategories = [];
   questionEdit;
   list_answer = [];
+  page = 0;
+  page_answer = 0;
   constructor(private question: QuestionsService,
     private answer: AnswerService,
     private categories: CategoriesService) { }
@@ -42,20 +44,38 @@ export class QuestionComponent implements OnInit {
   }
 
   getListQuestion(page?) {
-    this.listQuestion = [];
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "8",
       "sort": "-lastModified"
+    }
+    if (!page) {
+      this.listQuestion = [];
     }
     this.question.get(params).subscribe(data => {
       console.log("list-question", data);
-      this.listQuestion = data;
+      if (!page) {
+        this.listQuestion = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listQuestion.push(data[i]);
+        }
+      }
+
     }, err => {
       console.log("err-list-question", err);
     })
   }
 
+  loadMore(type) {
+    if (type == 'question') {
+      this.page++;
+      this.getListQuestion(this.page);
+    } else if (type == 'answer') {
+      this.page_answer++;
+      this.getListAnswer(this.id_select, this.page_answer);
+    }
+  }
 
   delete(id) {
     this.question.delete(id).subscribe(data => {
@@ -97,15 +117,25 @@ export class QuestionComponent implements OnInit {
     }, 10);
   }
 
-  getListAnswer(id) {
+  getListAnswer(id, page?) {
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "5",
       "sort": "-lastModified"
+    }
+    if (!page) {
+      this.list_answer = [];
     }
     this.answer.get(params, id).subscribe(data => {
       console.log("list-answer", data);
-      this.list_answer = data;
+      if (!page) {
+        this.list_answer = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.list_answer.push(data[i]);
+        }
+      }
+
     }, err => {
       console.log("list-answer", err);
     })

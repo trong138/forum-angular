@@ -17,7 +17,9 @@ export class DetailPostComponent implements OnInit {
   private list_answer = [];
   private check_follow = false;
   private checkEdit = [];
+  private check_my_question = false;
   private textEdit;
+  private page_answer = 0;
   constructor(private route: ActivatedRoute,
     private Router: Router,
     private question: QuestionsService,
@@ -62,6 +64,11 @@ export class DetailPostComponent implements OnInit {
     this.question.detail(id).subscribe(data => {
       console.log("detail-question", data);
       this.question_detail = data;
+      if (this.id_user == data.userId) {
+        this.check_my_question = true;
+      } else {
+        this.check_my_question = false;
+      }
     }, err => {
       console.log("detail-question", err);
     })
@@ -78,15 +85,29 @@ export class DetailPostComponent implements OnInit {
     })
   }
 
-  getListAnswer(id) {
+  loadMore() {
+    this.page_answer++;
+    this.getListAnswer(this.id_question, this.page_answer);
+  }
+
+  getListAnswer(id, page?) {
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "5",
       "sort": "-lastModified"
+    }
+    if (!page) {
+      this.list_answer = [];
     }
     this.answer.get(params, id).subscribe(data => {
       console.log("list-answer", data);
-      this.list_answer = data;
+      if (!page) {
+        this.list_answer = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.list_answer.push(data[i]);
+        }
+      }
     }, err => {
       console.log("list-answer", err);
     })

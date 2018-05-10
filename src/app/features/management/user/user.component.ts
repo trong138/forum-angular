@@ -8,24 +8,39 @@ import { UserService } from '../../../core/api/user.service';
 })
 export class UserComponent implements OnInit {
   listUser = [];
+  page = 0;
   constructor(private user: UserService) { }
 
   ngOnInit() {
     this.getListUser();
   }
 
-  getListUser() {
+  getListUser(page?) {
 
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "8",
     };
+    if (!page) {
+      this.listUser = [];
+    }
     this.user.getTopUser(params).subscribe(data => {
       console.log('listTopUser', data);
-      this.listUser = data;
+      if (!page) {
+        this.listUser = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listUser.push(data[i]);
+        }
+      }
     }, err => {
       console.log('listTopUser', err);
     })
+  }
+
+  loadMore() {
+    this.page++;
+    this.getListUser(this.page);
   }
 
   admin(id) {

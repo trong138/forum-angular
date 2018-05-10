@@ -27,12 +27,12 @@
             <!-- <td>{{item.content}}</td> -->
 
             <td align="center">
-              <button (click)="questionSelect = item;getListAnswer(item.id);id_select = item.id;type_modal = 'detail'" data-toggle="modal"
+              <button (click)="questionSelect = item;getListAnswer(item.id);id_select = item.id;page_answer = 0;type_modal = 'detail'" data-toggle="modal"
                 data-target="#detail" type="button" class="btn btn-success">Detail</button>
             </td>
             <td align="center">
-              <button (click)="questionSelect = item;id_select = item.id;type_modal = 'edit';initEdit(item.content)" data-toggle="modal" data-target="#edit-quesiton"
-                type="button" class="btn btn-primary">Edit</button>
+              <button (click)="questionSelect = item;id_select = item.id;type_modal = 'edit';initEdit(item.content)" data-toggle="modal"
+                data-target="#edit-quesiton" type="button" class="btn btn-primary">Edit</button>
             </td>
             <td align="center">
               <button (click)="delete(item.id)" type="button" class="btn btn-danger">Delete</button>
@@ -85,15 +85,17 @@
 
       </div>
       <div class="modal-footer">
-        <button [disabled]='!(questionSelect.title && questionSelect.categoryName)' type="submit" (click)="submit()"
-          data-dismiss="modal" class="btn btn-primary">Submit</button>
+        <button [disabled]='!(questionSelect.title && questionSelect.categoryName)' type="submit" (click)="submit()" data-dismiss="modal"
+          class="btn btn-primary">Submit</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
   </div>
 </div>
-
+<br>
+<button style="margin-bottom: 30px" class="btn btn-primary" (click)="loadMore('question')">Load More</button>
+<br>
 <div id="detail" class="modal fade" role="dialog" *ngIf="questionSelect">
   <div style="max-width: 1000px;" class="modal-dialog">
 
@@ -162,7 +164,8 @@
           </div>
 
         </div>
-
+        <hr>
+        <button type="button" class="btn btn-primary" (click)="loadMore('answer')">Load More</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>

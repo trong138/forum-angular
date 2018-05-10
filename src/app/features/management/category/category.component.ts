@@ -11,19 +11,35 @@ export class CategoryComponent implements OnInit {
   textEdit;
   id_edit;
   type_modal;
+  page = 0;
   constructor(private categories: CategoriesService) { }
 
   ngOnInit() {
     this.getListCategories();
   }
 
-  getListCategories() {
+  getListCategories(page?) {
+    if (!page) {
+      this.listCategories = [];
+    }
     this.categories.get().subscribe(data => {
       console.log("categories-getlist", data);
-      this.listCategories = data;
+      if (!page) {
+        this.listCategories = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listCategories.push(data[i]);
+        }
+      }
+
     }, err => {
       console.log('categories', err);
     });
+  }
+
+  loadMore() {
+    this.page++;
+    this.getListCategories(this.page);
   }
 
   delete(id) {
