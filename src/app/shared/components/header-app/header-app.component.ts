@@ -17,13 +17,14 @@ import { NotificationService } from '../../../core/api/notification.service';
 })
 export class HeaderAppComponent implements OnInit {
   listTitle = [
-    { name: 'Home', value: 0 },
+    // { name: 'Home', value: 0 },
     { name: 'Question', value: 1 },
     // { name: 'Category', value: 2 },
-    { name: 'Gold Member', value: 3 },
+    { name: 'Top Member', value: 3 },
     // { name: 'Team', value: 4 },
     { name: 'My Profile', value: 5 },
     { name: 'Logout', value: 6 },
+    { name: 'Login', value: 7 },
   ];
   ws;
   private count = 0;
@@ -31,7 +32,9 @@ export class HeaderAppComponent implements OnInit {
   private userInfo;
   private imageProfile;
   private notify_not_seen;
-  listNotification = [];
+  private listNotification = [];
+  private check_admin;
+  private page_notify = 0;
   constructor(private Router: Router,
     private storage: LocalStorageService,
     private UserService: UserService,
@@ -44,6 +47,11 @@ export class HeaderAppComponent implements OnInit {
     // this.getUserInfo(this.userModal.getCookieUserInfo().id);
     if (this.userModal.getCookieUserInfo()) {
       this.id_user = this.userModal.getCookieUserInfo().id;
+      if (this.userModal.getCookieUserInfo().admin) {
+        this.check_admin = true;
+      } else {
+        this.check_admin = false;
+      }
       console.log("id_user", this.id_user);
     }
     this.connect();
@@ -71,26 +79,46 @@ export class HeaderAppComponent implements OnInit {
   seenNotify() {
     this.notification.seen().subscribe(data => {
       console.log("data-notification", data);
-      this.getNotification();
-      this.count == 0;
+      // this.getNotification();
+      this.notify_not_seen = 0;
     }, err => {
       console.log("err-notification", err);
     })
   }
 
   getNotification(page?) {
-    this.listNotification = [];
+    if (!page) {
+      this.listNotification = [];
+    }
     var params = {
-      page: 0,
-      size: 100
+      page: page || 0,
+      size: 12
     }
     this.notification.get(params).subscribe(data => {
       console.log("data-notification", data);
-      this.listNotification = data;
+      if (!page) {
+        this.listNotification = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listNotification.push(data[i]);
+        }
+      }
+      // this.listNotification = data;
       this.checkNumberNotify();
     }, err => {
       console.log("err-notification", err);
     })
+  }
+
+  onScrollEvent() {
+    this.page_notify++;
+    this.getNotification(this.page_notify);
+  }
+
+  goToManagement() {
+    this.Router.navigate(['/management', {
+      // id: id
+    }]);
   }
 
   goToQuestion(id) {
@@ -118,7 +146,7 @@ export class HeaderAppComponent implements OnInit {
     else if (id == 4) this.goToSetting();
     else if (id == 5) this.goToInfo();
     else if (id == 6) this.goToLogin();
-    // else if (id == 2) this.goToLogin();
+    else if (id == 7) this.goToLogin();
 
   }
 

@@ -16,6 +16,8 @@ export class CategoriesComponent implements OnInit {
   private id_user;
   private statusList;
   private categorySelect;
+  private keySearch;
+  private page = 0;
   constructor(private Router: Router,
     private userModal: UserModelService,
     private categories: CategoriesService,
@@ -33,16 +35,32 @@ export class CategoriesComponent implements OnInit {
 
 
   getListQuestion(page?) {
-    this.statusList = 'auto';
-    this.listPost = [];
+    console.log("page", page);
+    if (this.statusList != 'auto') {
+      this.page = 0;
+      this.statusList = 'auto';
+    }
+    // this.statusList = 'auto';
+    if (!page) {
+      this.listPost = [];
+    }
+
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "5",
       "sort": "-lastModified"
     }
+    console.log("params", params);
     this.question.get(params).subscribe(data => {
       console.log("list-question", data);
-      this.listPost = data;
+      if (!page) {
+        this.listPost = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listPost.push(data[i]);
+        }
+      }
+
       this.title = 'List Question';
     }, err => {
       console.log("err-list-question", err);
@@ -50,33 +68,60 @@ export class CategoriesComponent implements OnInit {
   }
 
   getListYourQuestion(page?) {
-    this.statusList = 'yourquestion';
+    if (this.statusList != 'yourquestion') {
+      this.page = 0;
+      this.statusList = 'yourquestion';
+    }
+    // this.statusList = 'yourquestion';
+    if (!page) {
+      this.listPost = [];
+    }
     var params = {
       "page": page | 0,
-      "size": "100",
+      "size": "5",
       "sort": "-lastModified"
     }
     this.question.getWithIdUser(params, this.id_user).subscribe(data => {
       console.log("getListQuestion", data);
-      this.listPost = data;
+      if (!page) {
+        this.listPost = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listPost.push(data[i]);
+        }
+      }
     }, err => {
       console.log("getListQuestion", err);
     })
   }
 
   getListWithCategory(category, page?) {
+
+    if (this.statusList != 'category') {
+      this.page = 0;
+      this.statusList = 'category';
+    }
     this.categorySelect = category;
-    this.statusList = 'category';
-    this.listPost = [];
+    // this.statusList = 'category';
+
+    if (!page) {
+      this.listPost = [];
+    }
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "5",
       "name": category,
       "sort": "-createAt"
     }
     this.question.getWithCategory(params).subscribe(data => {
       console.log("list-question-categoy", data);
-      this.listPost = data;
+      if (!page) {
+        this.listPost = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listPost.push(data[i]);
+        }
+      }
       this.title = 'List Question ' + category;
     }, err => {
       console.log("err-list-question", err);
@@ -84,34 +129,62 @@ export class CategoriesComponent implements OnInit {
   }
 
   getListQuestionNotAnswer(page?) {
-    this.statusList = 'notanswer';
-    this.listPost = [];
+    if (this.statusList != 'notanswer') {
+      this.page = 0;
+      this.statusList = 'notanswer';
+    }
+    // this.statusList = 'notanswer';
+
+    if (!page) {
+      this.listPost = [];
+    }
     var params = {
-      'page': '0',
-      'size': '100',
+      "page": page || "0",
+      'size': '5',
       'quatity': '0'
     }
     this.question.getNotAnswer(params).subscribe(data => {
       console.log("list-question-notanswer", data);
-      this.listPost = data;
+      if (!page) {
+        this.listPost = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listPost.push(data[i]);
+        }
+      }
       this.title = 'List Question Not Answer';
     }, err => {
       console.log("err-list-question-notanswer", err);
     })
   }
 
-  search(key) {
-    console.log(key);
-    this.statusList = 'search';
-    this.listPost = [];
+  search(key, page?) {
+
+    if (this.statusList != 'search') {
+      this.page = 0;
+      this.statusList = 'search';
+    }
+
+    this.keySearch = key;
+    // this.statusList = 'search';
+
+    if (!page) {
+      this.listPost = [];
+    }
     var params = {
-      'page': '0',
-      'size': '100',
+      "page": page || "0",
+      'size': '5',
       'keyword': key
     }
     this.question.search(params).subscribe(data => {
       console.log("list-question-search", data);
-      this.listPost = data;
+      if (!page) {
+        this.listPost = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listPost.push(data[i]);
+        }
+      }
       this.title = 'List Question';
     }, err => {
       console.log("err-list-question-search", err);
@@ -119,33 +192,65 @@ export class CategoriesComponent implements OnInit {
   }
 
   getListQuestionFollow(page?) {
-    this.statusList = 'follow';
-    this.listPost = [];
+    if (this.statusList != 'follow') {
+      this.page = 0;
+      this.statusList = 'follow';
+    }
+    if (!page) {
+      this.listPost = [];
+    }
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "5",
       "sort": "-lastModified"
     }
     this.question.getFollow(params).subscribe(data => {
       console.log("list-question-follow", data);
-      this.listPost = data;
+      if (!page) {
+        this.listPost = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listPost.push(data[i]);
+        }
+      }
       this.title = "Questions You Follow";
     }, err => {
       console.log("err-list-question-follow", err);
     })
   }
 
+  addQuestion() {
+    this.page++;
+    var page = this.page;
+    console.log("--------------", page, this.statusList);
+    if (this.statusList == 'auto') {
+      this.getListQuestion(page);
+    } else if (this.statusList == 'yourquestion') {
+      this.getListYourQuestion(page);
+    } else if (this.statusList == 'category') {
+      this.getListWithCategory(this.categorySelect, page);
+    } else if (this.statusList == 'notanswer') {
+      this.getListQuestionNotAnswer(page);
+    } else if (this.statusList == 'follow') {
+      this.getListQuestionFollow(page);
+    } else if (this.statusList == 'search') {
+      this.search(this.keySearch, page);
+    }
+  }
+
   reLoadListQuestion() {
-    if (this.statusList = 'auto') {
+    if (this.statusList == 'auto') {
       this.getListQuestion();
-    } else if (this.statusList = 'yourquestion') {
+    } else if (this.statusList == 'yourquestion') {
       this.getListYourQuestion();
-    } else if (this.statusList = 'category') {
+    } else if (this.statusList == 'category') {
       this.getListWithCategory(this.categorySelect);
-    } else if (this.statusList = 'notanswer') {
+    } else if (this.statusList == 'notanswer') {
       this.getListQuestionNotAnswer();
-    } else if (this.statusList = 'follow') {
+    } else if (this.statusList == 'follow') {
       this.getListQuestionNotAnswer();
+    } else if (this.statusList == 'search') {
+      this.search(this.keySearch);
     }
   }
 

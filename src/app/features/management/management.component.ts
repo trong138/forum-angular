@@ -33,4 +33,10 @@ export class ManagementComponent implements OnInit {
       }
     }
   }
+  comeBack() {
+    this.Router.navigate(['/features/categories', {
+      // id: id
+    }]);
+  }
+
 }

@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
       data => {
         console.log(data);
         this.userModel.setCookieUserInfo(data);
-        this.Router.navigate(['/features/home', {
+        this.Router.navigate(['/features/categories', {
           // iduser: this.userModel.getCookieUserInfo().id,
         }], );
       },
@@ -171,7 +171,7 @@ export class LoginComponent implements OnInit {
   }
 
   skip() {
-    this.Router.navigate(['/features/home', {
+    this.Router.navigate(['/features/categories', {
       // iduser: this.userModel.getCookieUserInfo().id,
     }], );
   }

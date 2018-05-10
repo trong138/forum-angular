@@ -41,7 +41,7 @@ export class DetailPostComponent implements OnInit {
       this.checkFollow(this.id_question);
       setTimeout(() => {
         CKEDITOR.replace('textComment');
-      }, 300);
+      }, 1000);
     } else {
       this.id_user = null;
     }

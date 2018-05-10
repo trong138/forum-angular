@@ -109,7 +109,7 @@
   <!-- <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap"> -->
   <div class="card-body">
     <h2 class="card-title">{{item.title}}</h2>
-    <p class="card-text">{{item.content}}</p>
+    <p class="card-text" [innerHTML]="item.content"></p>
     <a *ngIf="check_member" (click)="edit(item.id)" class="btn btn-success">Edit</a>
     <a *ngIf="check_member" (click)="deletePost(item.id)" class="btn btn-danger">Delete</a>
     <a (click)="goToDetail(item.id)" class="btn btn-primary">Read More &rarr;</a>

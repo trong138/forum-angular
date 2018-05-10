@@ -5,7 +5,7 @@ import { FeaturesComponent } from "./features.component";
 export const featureRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'features/home',
+        redirectTo: 'features/categories',
         pathMatch: 'prefix'
     }, {
         path: 'login',
@@ -17,8 +17,8 @@ export const featureRoutes: Routes = [
         path: 'features',
         component: FeaturesComponent,
         children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'home', loadChildren: './home/home.module#HomeModule' },
+            { path: '', redirectTo: 'categories', pathMatch: 'full' },
+            // { path: 'home', loadChildren: './home/home.module#HomeModule' },
             { path: 'categories', loadChildren: './categories/categories.module#CategoriesModule' },
             { path: 'detail-post', loadChildren: './detail-post/detail-post.module#DetailPostModule' },
             { path: 'top-follow', loadChildren: './top-follow/top-follow.module#TopFollowModule' },
