@@ -20,6 +20,7 @@ export class DetailPostComponent implements OnInit {
   private check_my_question = false;
   private textEdit;
   private page_answer = 0;
+  private show_load_more = true;
   constructor(private route: ActivatedRoute,
     private Router: Router,
     private question: QuestionsService,
@@ -100,6 +101,11 @@ export class DetailPostComponent implements OnInit {
       this.list_answer = [];
     }
     this.answer.get(params, id).subscribe(data => {
+      if (data.length == 5) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       console.log("list-answer", data);
       if (!page) {
         this.list_answer = data;
@@ -110,6 +116,7 @@ export class DetailPostComponent implements OnInit {
       }
     }, err => {
       console.log("list-answer", err);
+      this.show_load_more = false;
     })
   }
 

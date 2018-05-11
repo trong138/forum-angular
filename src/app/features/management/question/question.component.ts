@@ -24,6 +24,8 @@ export class QuestionComponent implements OnInit {
   list_answer = [];
   page = 0;
   page_answer = 0;
+  show_load_more_answer = true;
+  show_load_more_question = true;
   constructor(private question: QuestionsService,
     private answer: AnswerService,
     private categories: CategoriesService) { }
@@ -53,6 +55,11 @@ export class QuestionComponent implements OnInit {
       this.listQuestion = [];
     }
     this.question.get(params).subscribe(data => {
+      if (data.length == 8) {
+        this.show_load_more_question = true;
+      } else {
+        this.show_load_more_question = false;
+      }
       console.log("list-question", data);
       if (!page) {
         this.listQuestion = data;
@@ -64,6 +71,7 @@ export class QuestionComponent implements OnInit {
 
     }, err => {
       console.log("err-list-question", err);
+      this.show_load_more_question = false;
     })
   }
 
@@ -127,6 +135,11 @@ export class QuestionComponent implements OnInit {
       this.list_answer = [];
     }
     this.answer.get(params, id).subscribe(data => {
+      if (data.length == 5) {
+        this.show_load_more_answer = true;
+      } else {
+        this.show_load_more_answer = false;
+      }
       console.log("list-answer", data);
       if (!page) {
         this.list_answer = data;
@@ -138,6 +151,7 @@ export class QuestionComponent implements OnInit {
 
     }, err => {
       console.log("list-answer", err);
+      this.show_load_more_answer = false;
     })
   }
 

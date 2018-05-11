@@ -8,6 +8,7 @@ import { UserService } from '../../../core/api/user.service';
 })
 export class UserComponent implements OnInit {
   listUser = [];
+  show_load_more = true;
   page = 0;
   constructor(private user: UserService) { }
 
@@ -25,6 +26,11 @@ export class UserComponent implements OnInit {
       this.listUser = [];
     }
     this.user.getTopUser(params).subscribe(data => {
+      if (data.length == 8) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       console.log('listTopUser', data);
       if (!page) {
         this.listUser = data;
@@ -35,6 +41,7 @@ export class UserComponent implements OnInit {
       }
     }, err => {
       console.log('listTopUser', err);
+      this.show_load_more = false;
     })
   }
 

@@ -30,9 +30,9 @@
                 alt="">
               <ul infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="1000" [scrollWindow]="false" (scrolled)="onScrollEvent()"
                 class="dropdown-menu" style="max-height: 500px;padding: 20px;overflow-x: auto;">
-                <li (click)="goToQuestion(item.questionId);" style="width: 300px" *ngFor="let item of listNotification let i = index">
-                  <a *ngIf="item.seen" style="color: gray">{{item.content}}</a>
-                  <a *ngIf="!item.seen" style="color: black">{{item.content}}</a>
+                <li (click)="goToQuestion(item.questionId);" style="width: 300px;" *ngFor="let item of listNotification let i = index">
+                  <a *ngIf="item.seen">{{item.content}}</a>
+                  <a *ngIf="!item.seen" style="    background-color: aliceblue;">{{item.content}}</a>
                   <hr *ngIf="i != listNotification.length -1">
                 </li>
               </ul>

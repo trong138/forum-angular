@@ -94,7 +94,7 @@
   </div>
 </div>
 <br>
-<button *ngIf="listQuestion.length > 0" style="margin-bottom: 30px" class="btn btn-primary" (click)="loadMore('question')">Load More</button>
+<button *ngIf="show_load_more_question" style="margin-bottom: 30px" class="btn btn-primary" (click)="loadMore('question')">Load More</button>
 <br>
 <div id="detail" class="modal fade" role="dialog" *ngIf="questionSelect">
   <div style="max-width: 1000px;" class="modal-dialog">
@@ -165,7 +165,7 @@
 
         </div>
         <hr>
-        <button *ngIf="list_answer.length > 0" type="button" class="btn btn-primary" (click)="loadMore('answer')">Load More</button>
+        <button *ngIf="show_load_more_answer" type="button" class="btn btn-primary" (click)="loadMore('answer')">Load More</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>

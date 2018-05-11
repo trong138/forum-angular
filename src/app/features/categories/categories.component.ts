@@ -18,6 +18,7 @@ export class CategoriesComponent implements OnInit {
   private categorySelect;
   private keySearch;
   private page = 0;
+  private show_load_more = true;
   constructor(private Router: Router,
     private userModal: UserModelService,
     private categories: CategoriesService,
@@ -53,6 +54,11 @@ export class CategoriesComponent implements OnInit {
     console.log("params", params);
     this.question.get(params).subscribe(data => {
       console.log("list-question", data);
+      if (data.length == 5) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       if (!page) {
         this.listPost = data;
       } else {
@@ -64,6 +70,7 @@ export class CategoriesComponent implements OnInit {
       this.title = 'List Question';
     }, err => {
       console.log("err-list-question", err);
+      this.show_load_more = false;
     })
   }
 
@@ -83,6 +90,12 @@ export class CategoriesComponent implements OnInit {
     }
     this.question.getWithIdUser(params, this.id_user).subscribe(data => {
       console.log("getListQuestion", data);
+
+      if (data.length == 5) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       if (!page) {
         this.listPost = data;
       } else {
@@ -92,6 +105,7 @@ export class CategoriesComponent implements OnInit {
       }
     }, err => {
       console.log("getListQuestion", err);
+      this.show_load_more = false;
     })
   }
 
@@ -114,6 +128,12 @@ export class CategoriesComponent implements OnInit {
       "sort": "-createAt"
     }
     this.question.getWithCategory(params).subscribe(data => {
+
+      if (data.length == 5) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       console.log("list-question-categoy", data);
       if (!page) {
         this.listPost = data;
@@ -125,6 +145,7 @@ export class CategoriesComponent implements OnInit {
       this.title = 'List Question ' + category;
     }, err => {
       console.log("err-list-question", err);
+      this.show_load_more = false;
     })
   }
 
@@ -144,6 +165,12 @@ export class CategoriesComponent implements OnInit {
       'quatity': '0'
     }
     this.question.getNotAnswer(params).subscribe(data => {
+
+      if (data.length == 5) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       console.log("list-question-notanswer", data);
       if (!page) {
         this.listPost = data;
@@ -155,6 +182,7 @@ export class CategoriesComponent implements OnInit {
       this.title = 'List Question Not Answer';
     }, err => {
       console.log("err-list-question-notanswer", err);
+      this.show_load_more = false;
     })
   }
 
@@ -177,6 +205,12 @@ export class CategoriesComponent implements OnInit {
       'keyword': key
     }
     this.question.search(params).subscribe(data => {
+
+      if (data.length == 5) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       console.log("list-question-search", data);
       if (!page) {
         this.listPost = data;
@@ -188,6 +222,7 @@ export class CategoriesComponent implements OnInit {
       this.title = 'List Question';
     }, err => {
       console.log("err-list-question-search", err);
+      this.show_load_more = false;
     })
   }
 
@@ -205,6 +240,12 @@ export class CategoriesComponent implements OnInit {
       "sort": "-lastModified"
     }
     this.question.getFollow(params).subscribe(data => {
+
+      if (data.length == 5) {
+        this.show_load_more = true;
+      } else {
+        this.show_load_more = false;
+      }
       console.log("list-question-follow", data);
       if (!page) {
         this.listPost = data;
@@ -216,6 +257,7 @@ export class CategoriesComponent implements OnInit {
       this.title = "Questions You Follow";
     }, err => {
       console.log("err-list-question-follow", err);
+      this.show_load_more = false;
     })
   }
 
