@@ -69,7 +69,8 @@ export class HeaderAppComponent implements OnInit {
         console.log('data-notify', JSON.parse(mess.body));
         this.listNotification.splice(0, 0, JSON.parse(mess.body));
         // this.listNotification.push();
-        this.checkNumberNotify();
+        this.notify_not_seen++;
+        // this.checkNumberNotify();
       })
     }, err => {
 
@@ -128,13 +129,12 @@ export class HeaderAppComponent implements OnInit {
   }
 
   checkNumberNotify() {
-    var number = 0;
-    for (let i = 0; i < this.listNotification.length; i++) {
-      if (this.listNotification[i].seen == false) {
-        number++;
-      }
-    }
-    this.notify_not_seen = number;
+    this.notification.count().subscribe(data => {
+      this.notify_not_seen = data.number;
+    }, err => {
+      console.log(err);
+    })
+    // this.notify_not_seen = number;
   }
 
   changePage(id) {
