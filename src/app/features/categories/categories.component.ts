@@ -219,7 +219,7 @@ export class CategoriesComponent implements OnInit {
     })
   }
 
-  addQuestion() {
+  loadMore() {
     this.page++;
     var page = this.page;
     console.log("--------------", page, this.statusList);

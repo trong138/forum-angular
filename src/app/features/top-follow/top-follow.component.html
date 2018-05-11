@@ -13,7 +13,7 @@
     </div>
 
   </div>
-  <div style="text-align:center;">
+  <div *ngIf='listTopUser.length > 0' style="text-align:center;margin-bottom: 40px;">
     <button align="center" class="btn btn-primary" (click)="loadMore('top')">Load More</button>
   </div>
 
@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div style="text-align:center;margin-bottom: 40px;">
+  <div *ngIf='listUserFollow.length > 0' style="text-align:center;margin-bottom: 40px;">
     <button align="center" class="btn btn-primary" (click)="loadMore('follow')">Load More</button>
   </div>
 

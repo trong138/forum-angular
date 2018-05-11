@@ -36,7 +36,7 @@
           <a class="page-link">Newer &rarr;</a>
         </li>
       </ul> -->
-      <button (click)="addQuestion()" class="btn btn-primary justify-content-center mb-4">Load More</button>
+      <button *ngIf="listPost.length > 0" (click)="loadMore()" class="btn btn-primary justify-content-center mb-4">Load More</button>
 
     </div>
 

@@ -27,8 +27,8 @@
             <!-- <td>{{item.content}}</td> -->
 
             <td align="center">
-              <button (click)="questionSelect = item;getListAnswer(item.id);id_select = item.id;page_answer = 0;type_modal = 'detail'" data-toggle="modal"
-                data-target="#detail" type="button" class="btn btn-success">Detail</button>
+              <button (click)="questionSelect = item;getListAnswer(item.id);id_select = item.id;page_answer = 0;type_modal = 'detail'"
+                data-toggle="modal" data-target="#detail" type="button" class="btn btn-success">Detail</button>
             </td>
             <td align="center">
               <button (click)="questionSelect = item;id_select = item.id;type_modal = 'edit';initEdit(item.content)" data-toggle="modal"
@@ -94,7 +94,7 @@
   </div>
 </div>
 <br>
-<button style="margin-bottom: 30px" class="btn btn-primary" (click)="loadMore('question')">Load More</button>
+<button *ngIf="listQuestion.length > 0" style="margin-bottom: 30px" class="btn btn-primary" (click)="loadMore('question')">Load More</button>
 <br>
 <div id="detail" class="modal fade" role="dialog" *ngIf="questionSelect">
   <div style="max-width: 1000px;" class="modal-dialog">
@@ -165,7 +165,7 @@
 
         </div>
         <hr>
-        <button type="button" class="btn btn-primary" (click)="loadMore('answer')">Load More</button>
+        <button *ngIf="list_answer.length > 0" type="button" class="btn btn-primary" (click)="loadMore('answer')">Load More</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
