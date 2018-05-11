@@ -15,13 +15,13 @@
     <table class="table">
       <tbody>
         <tr *ngIf="id_user" (click)="emitParams('you-follow',2)">
-          <td>questions you follow</td>
+          <td>Questions You Follow</td>
         </tr>
         <tr *ngIf="id_user" (click)="emitParams('your-question',2)">
-          <td>your questions</td>
+          <td>Your Questions</td>
         </tr>
         <tr (click)="emitParams('not-answer',2)">
-          <td>questions not answer</td>
+          <td>Questions Not Answer</td>
         </tr>
       </tbody>
     </table>

@@ -12,6 +12,8 @@ export class TopFollowComponent implements OnInit {
   listUserFollow = [];
   id_user;
   listTopUser = [];
+  page_follow = 0;
+  page_top = 0;
   constructor(private user: UserService,
     private Router: Router,
     private userModal: UserModelService) { }
@@ -33,31 +35,59 @@ export class TopFollowComponent implements OnInit {
     }]);
   }
 
-  getListUserFollow() {
+  getListUserFollow(page?) {
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "8",
       "sort": "+username"
     };
+    if (!page) {
+      this.listUserFollow = [];
+    }
     this.user.getListUserFollow(params).subscribe(data => {
       console.log('getListUserFollow', data);
-      this.listUserFollow = data;
+      if (!page) {
+        this.listUserFollow = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listUserFollow.push(data[i]);
+        }
+      }
     }, err => {
       console.log('getListUserFollow', err);
     })
   }
 
-  getTopUser() {
+  getTopUser(page?) {
     var params = {
-      "page": "0",
-      "size": "100",
+      "page": page || "0",
+      "size": "8",
       "sort": "-follow"
     };
+    if (!page) {
+      this.listTopUser = [];
+    }
     this.user.getTopUser(params).subscribe(data => {
       console.log('listTopUser', data);
-      this.listTopUser = data;
+      if (!page) {
+        this.listTopUser = data;
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          this.listTopUser.push(data[i]);
+        }
+      }
     }, err => {
       console.log('listTopUser', err);
     })
+  }
+
+  loadMore(type) {
+    if (type == 'follow') {
+      this.page_follow++;
+      this.getListUserFollow(this.page_follow);
+    } else if (type == 'top') {
+      this.page_top++;
+      this.getTopUser(this.page_top);
+    }
   }
 }

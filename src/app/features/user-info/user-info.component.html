@@ -7,8 +7,8 @@
         <div class="panel-heading">
           <h4>{{userInfo.username}}
             <span *ngIf="check_member" (click)="settingUser()" style="float:right">Thay đổi password</span>
-            <button (click)="follow()" *ngIf="!check_follow && !check_member" type="button" style="float: right;" class="btn btn-info btn-sm">Follow</button>
-            <button (click)="unfollow()" *ngIf="check_follow && !check_member" type="button" style="float: right;" class="btn btn-info btn-sm">UnFollow</button>
+            <button (click)="follow()" *ngIf="!check_follow && !check_member && user_exist" type="button" style="float: right;" class="btn btn-info btn-sm">Follow</button>
+            <button (click)="unfollow()" *ngIf="check_follow && !check_member && user_exist" type="button" style="float: right;" class="btn btn-info btn-sm">UnFollow</button>
           </h4>
         </div>
 

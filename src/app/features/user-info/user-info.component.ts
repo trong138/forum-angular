@@ -22,6 +22,7 @@ export class UserInfoComponent implements OnInit {
   private check_member;
   private check_follow = false;
   private check_change_password = true;
+  private user_exist = false;
   constructor(private route: ActivatedRoute,
     private UserSevice: UserService,
     private UserModelService: UserModelService,
@@ -33,12 +34,17 @@ export class UserInfoComponent implements OnInit {
       .map(params => params['iduser'])
       .subscribe((id) => {
         this.id_user = id;
-
-        let _id = this.UserModelService.getCookieUserInfo().id;
-        if (_id == this.id_user) {
-          this.check_member = true;
+        if (this.UserModelService.getCookieUserInfo()) {
+          let _id = this.UserModelService.getCookieUserInfo().id;
+          this.user_exist = true;
+          if (_id == this.id_user) {
+            this.check_member = true;
+          } else {
+            this.check_member = false;
+          }
         } else {
           this.check_member = false;
+          this.user_exist = false;
         }
         this.getUserInfo(id);
         this.checkFollow(id);

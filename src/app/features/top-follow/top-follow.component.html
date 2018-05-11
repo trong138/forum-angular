@@ -9,8 +9,14 @@
         <!-- <small>Job Title</small> -->
       </h3>
       <p>{{user.username}}</p>
+
     </div>
+
   </div>
+  <div style="text-align:center;">
+    <button align="center" class="btn btn-primary" (click)="loadMore('top')">Load More</button>
+  </div>
+
 </div>
 <div class="container" *ngIf="id_user && listUserFollow">
   <div class="row">
@@ -25,4 +31,9 @@
       <p>{{user.username}}</p>
     </div>
   </div>
+
+  <div style="text-align:center;margin-bottom: 40px;">
+    <button align="center" class="btn btn-primary" (click)="loadMore('follow')">Load More</button>
+  </div>
+
 </div>
