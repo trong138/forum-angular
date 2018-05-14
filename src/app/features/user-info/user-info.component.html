@@ -23,26 +23,18 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <div align="center" *ngIf="check_member">
+                    <div align="center" *ngIf="check_member">
 
-                          <input (change)="changeImage($event)" id="profile-image-upload" class="hidden" type="file">
-                          <label for="profile-image-upload">
-                            <img [src]="imageProfile" class="img-thumbnail">click here to change profile image
-                          </label>
-                        </div>
-
-                        <div align="center" *ngIf="!check_member">
-                          <img [src]="imageProfile" class="img-thumbnail">
-                        </div>
-                        <br>
-                      </div>
-
-                      <div class="col-sm-6">
-                        <h4 style="color:#00b1b1;">{{userInfo.firstName}} {{userInfo.middleName}} {{userInfo.lastName}} </h4>
-                      </div>
+                      <input (change)="changeImage($event)" id="profile-image-upload" class="hidden" type="file">
+                      <label for="profile-image-upload">
+                        <img [src]="imageProfile" class="img-thumbnail">click here to change profile image
+                      </label>
                     </div>
+
+                    <div align="center" *ngIf="!check_member">
+                      <img [src]="imageProfile" class="img-thumbnail">
+                    </div>
+                    <br>
                   </tr>
                 </thead>
                 <tbody>
@@ -51,7 +43,7 @@
                     <th scope="row">
                       Username
                     </th>
-                    <td>
+                    <td style="min-width: 400px;">
                       {{userInfo.username}}
                     </td>
                   </tr>
@@ -63,13 +55,31 @@
                       {{userInfo.email}}
                     </td>
                   </tr>
-                  
+
                   <tr>
                     <th scope="row">
                       Name
                     </th>
                     <td>
                       {{userInfo.fullname}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Follower
+                    </th>
+                    <td>
+                      {{userInfo.followers}}
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row">
+                      Vote
+                    </th>
+                    <td>
+                      {{userInfo.vote}}
                     </td>
                   </tr>
 

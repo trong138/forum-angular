@@ -32,10 +32,8 @@ export class CreateEditQuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    CKEDITOR.replace('content');
-
+    CKEDITOR.replace('content');  
     this.getListCategories();
-
   }
 
   getQuestion(id) {
@@ -43,7 +41,9 @@ export class CreateEditQuestionComponent implements OnInit {
       this.tittle = data.title;
       // this.content = data.content;
       this.category = data.categoryName;
-      this.content = CKEDITOR.instances.content.setData(data.content);
+      setTimeout(() => {
+        CKEDITOR.instances.content.setData(data.content);
+      }, 500);
       console.log('getQuestion', data);
     }, err => {
       console.log('getQuestion', err);
