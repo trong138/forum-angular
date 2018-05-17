@@ -90,7 +90,7 @@
       </div>
     </div>
   </div>
-  <div class="card my-4" *ngIf="id_user">
+  <div class="card my-4" [hidden]="!(id_user && _userInfo && !_userInfo.banned)">
     <h5 class="card-header">Leave a Comment:</h5>
     <div class="card-body">
       <form>

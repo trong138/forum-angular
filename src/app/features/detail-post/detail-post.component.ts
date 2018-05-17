@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionsService } from '../../core/api/questions.service';
 import { AnswerService } from '../../core/api/answer.service';
 import { UserModelService } from '../../core/model/user-model.service';
+import { UserService } from '../../core/api/user.service';
 declare var CKEDITOR: any;
 @Component({
   selector: 'app-detail-post',
@@ -21,10 +22,12 @@ export class DetailPostComponent implements OnInit {
   private textEdit;
   private page_answer = 0;
   private show_load_more = true;
+  private _userInfo;
   constructor(private route: ActivatedRoute,
     private Router: Router,
     private question: QuestionsService,
     private userModal: UserModelService,
+    private UserSevice: UserService,
     private answer: AnswerService) {
     this.route.params
       .map(params => params['id'])
@@ -40,6 +43,7 @@ export class DetailPostComponent implements OnInit {
   ngOnInit() {
     if (this.userModal.getCookieUserInfo()) {
       this.id_user = this.userModal.getCookieUserInfo().id;
+      this.getUserInfo(this.id_user);
       console.log("id_user", this.id_user);
       this.checkFollow(this.id_question);
       setTimeout(() => {
@@ -48,6 +52,15 @@ export class DetailPostComponent implements OnInit {
     } else {
       this.id_user = null;
     }
+  }
+
+  getUserInfo(id) {
+    this.UserSevice.getInfoUser(id).subscribe(data => {
+      this._userInfo = data;
+      console.log("getInfoUser", data);
+    }, err => {
+      console.log(err);
+    });
   }
 
   initEdit(id) {

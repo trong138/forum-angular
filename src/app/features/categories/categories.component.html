@@ -9,7 +9,14 @@
     <div class="col-md-8">
 
       <h1 class="my-4">{{title}}
-        <h2 style="float: right;" class="btn btn-primary" (click)="goToCreateQuestion()">+ Add question</h2>
+        <span *ngIf="userInfo">
+          <button style="float: right;" [disabled]="userInfo.banned" class="btn btn-primary" (click)="goToCreateQuestion()">+ Add question</button>
+        </span>
+
+        <span *ngIf="!userInfo">
+          <button style="float: right;" class="btn btn-primary" (click)="goToCreateQuestion()">+ Add question</button>
+        </span>
+
       </h1>
 
       <!-- Blog Post -->

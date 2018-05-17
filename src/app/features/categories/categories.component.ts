@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CategoriesService } from '../../core/api/categories.service';
 import { QuestionsService } from '../../core/api/questions.service';
 import { UserModelService } from '../../core/model/user-model.service';
+import { UserService } from '../../core/api/user.service';
 
 @Component({
   selector: 'app-categories',
@@ -18,22 +19,33 @@ export class CategoriesComponent implements OnInit {
   private categorySelect;
   private keySearch;
   private page = 0;
+  private userInfo;
   private show_load_more = true;
   constructor(private Router: Router,
     private userModal: UserModelService,
     private categories: CategoriesService,
+    private UserSevice: UserService,
     private question: QuestionsService) { }
 
   ngOnInit() {
     if (this.userModal.getCookieUserInfo()) {
       this.id_user = this.userModal.getCookieUserInfo().id;
       console.log("id_user", this.id_user);
+      this.getUserInfo(this.id_user);
     }
     // this.getListCategories();
     this.getListQuestion();
     // this.getListQuestionNotAnswer();
   }
 
+  getUserInfo(id) {
+    this.UserSevice.getInfoUser(id).subscribe(data => {
+      this.userInfo = data;
+      console.log("getInfoUser", data);
+    }, err => {
+      console.log(err);
+    });
+  }
 
   getListQuestion(page?) {
     console.log("page", page);
